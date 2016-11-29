@@ -2,8 +2,8 @@ language: node_js
 node_js: node
 deploy:
   provider: heroku
-  api_key: 
-    secure: 08d1a138-b01c-455b-9d92-73e0ef738d0f
-  app: salty-basin-17915
+  api_key:
+    secure: V9wSYfrxyW77BgoDbQiN4c66ITolnLjdRzXPCD9vJXOVt546x2WfUKylEy+Tq4UXGMImCNNqTG11DmFM2AK819yQx6zWM/SCEaftNyrscZZZ0daRu3kIIDwQLuFtvbNfG2yuY+Pjqel5aX+IckiDcyE/6sK7lF9Bzo6J8m3qSVAwDoH0a/WOQPncKgffB9NoEsYUZ2ja5chxrLaH3jMwv/1cTw2VGoKiUYSp9ZCr3BabYop7kIFr7ybfbO+HCnwxcnHm5LfGThVCzFtHqxSsvt3h72na3x3d54vQ6ob7+I14IkZD0d+LiIKeDuowXZeP1Irg06arrUOf3yi+6UisfoEPYenc7w4klqAjAiXFxYxBwe/oKo/hYv4dksTJ8YNJXcRFaDAeUgXvYSY/frHeQy4ASmFI8kaGZ6MsKutwouH96mugLu2xugUdyVX/8AFx/CaAt5UysHL/B+Wq+ERqoel+wFcUCMLK1nQ6Iot0FtuOLMSyfCmARDQH+dEeYv5xHNqbD4TJhtGHrhn/7Y9T08Hvh8nW8VGiucKUWYDsrfCLqzoy895XEof8IM+PTGXzPiAGiin3hDiBCoYBWYNdC6CBQH6YL7BSwmDEjRTFpnsXcQ8SABPGtz2wM+Ni9LRdFO5LyMV4cZan2sUA4bCzb0GWFxyO3dCfkJY6LjyJhVc=
+  app: damp-coast-28136
   on:
-    repo: mqasimb/mongo-shopping-list
+    repo: mqasimb/brand-presence
