@@ -29,6 +29,8 @@ var MOCK_STUDY_SHEET = {
 ]
 };
 
+var userName;
+
 function getStudySheet(callbackFn) {
 	setTimeout(function(){ callbackFn(MOCK_STUDY_SHEET)}, 1);
 }
@@ -36,12 +38,14 @@ function getStudySheet(callbackFn) {
 function displayStudySheet(data) {
     console.log(data.studySheets);
     for (var i =0; i<data.studySheets.length; i++) {
-	   $('body').append(
-        '<p>' + data.studySheets[i].user + '</p>');
-        data.studySheets[i].sheet.forEach(function(item) {
-            $('body').append(
-                '<p>' + item.text + '</p>');
-        });
+        if(data.studySheets[i].user === userName) {
+    	   $('body').append(
+            '<p>' + data.studySheets[i].user + '</p>');
+            data.studySheets[i].sheet.forEach(function(item) {
+                $('body').append(
+                    '<p>' + item.text + '</p>');
+            });
+        }
     }
 }
 
@@ -50,5 +54,29 @@ function getAndDisplayStudySheet() {
 }
 
 $(function() {
-	getAndDisplayStudySheet();
+	$('#username').submit(function(event) {
+	   event.preventDefault();
+	   $('#username input').attr('disabled', 'true');
+	   $('#username button').attr('disabled', 'true');
+	   userName = $('#username input').val();
+	   getAndDisplayStudySheet();
+	});
+	$('#new-log').submit(function(event) {
+	   event.preventDefault();
+	   var newEntry = $('#new-log input').val();
+	   $('p').remove();
+	   for(var i=0; i<MOCK_STUDY_SHEET.studySheets.length; i++) {
+	       if(MOCK_STUDY_SHEET.studySheets[i].user === userName) {
+	           MOCK_STUDY_SHEET.studySheets[i].sheet.push(
+	               {
+	                    "id": "5555555",
+                        "text": newEntry,
+                        "publishedAt": 1470012976608
+	               });
+	       }
+	   }
+	   $('#new-log input').val('');
+	   getAndDisplayStudySheet();
+	});
+	
 })
