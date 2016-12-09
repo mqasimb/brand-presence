@@ -3,21 +3,21 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var bodyParser = require('body-parser');
 var User = require('./models/user-model');
+var Log = require('./models/log-model');
 var bcrypt = require('bcryptjs');
 var config = require('./config');
 var cookieParser = require('cookie-parser');
-var session = require('express-session')
+var session = require('express-session');
 
 var app = express();
 
 var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
 var LocalStrategy = require('passport-local').Strategy;
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -150,6 +150,27 @@ app.post('/register', function(req, res) {
                 return res.status(201).json({message: 'Registration Succesful'});
             });
         });
+    });
+});
+
+
+app.post('/logs', function(req, res) {
+    console.log(req.user.username, Date(), req.body.title, req.body.summary, req.body.questions);
+    Log.create({
+        username: req.user.username,
+        date: Date(),
+        title: req.body.title,
+        topic: req.body.topic,
+        summary: req.body.summary,
+        questions: req.body.questions
+    }, function(err, log) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        console.log(log);
+        res.status(201).json(log);
     });
 });
 
