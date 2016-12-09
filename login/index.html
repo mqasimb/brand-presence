@@ -1,9 +1,19 @@
-<body>
-</body>
-<form id="username">
-<label>UserName:</label><input type="text" name="name"></input>
-<label>Password:</label><input type="password" name="password"></input>
-<button>Login</button>
+<form action="/login" method="post">
+    <div>
+        <label>Username:</label>
+        <input type="text" name="username"/>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" name="password"/>
+    </div>
+    <div>
+        <input type="submit" value="Log In"/>
+    </div>
+</form>
+
+<form action="/logout" method="get">
+<input type="submit" value="Log Out"/>
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

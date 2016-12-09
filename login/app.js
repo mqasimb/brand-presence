@@ -8,39 +8,51 @@ var MOCK_USERNAMES = {
             ]
 };
 
-var username, password;
-var loggedin = false;
+// var loggedin = false;
 
-function getUsernames(callbackFn) {
-	setTimeout(function(){ callbackFn(MOCK_USERNAMES)}, 1);
-}
+// function displayLoginStatus(data) {
+//     // for (var i =0; i<data.usernames.length; i++) {
+//     //     if((data.usernames[i].username === username) && (data.usernames[i].password == password)) {
+//     // 	   loggedin = true;
+//     // 	   $('body').append(
+//     //         '<p>You are now logged in as: '+ data.usernames[i].username +'</p>');
+//     //         $('form').remove();
+//     //     }
+//     // }
+//     // if(loggedin === false) {
+//     //             $('body').append(
+//     //                 '<p>Invalid Username or Password'+ password+'</p>');
+//     //         }
+//     console.log(data);
+// }
 
-function displayLoginStatus(data) {
-    for (var i =0; i<data.usernames.length; i++) {
-        if((data.usernames[i].username === username) && (data.usernames[i].password == password)) {
-    	   loggedin = true;
-    	   $('body').append(
-            '<p>You are now logged in as: '+ data.usernames[i].username +'</p>');
-            $('form').remove();
-        }
-    }
-    if(loggedin === false) {
-                $('body').append(
-                    '<p>Invalid Username or Password'+ password+'</p>');
-            }
-}
+// $(function() {
+// 	$('#username').submit(function(event) {
+// 	   event.preventDefault();
+// 	   var username = $('input[name="name"]').val();
+// 	   var password = $('input[name="password"]').val();
+// 	   loginUser(username, password);
+// 	});
+// 	$('#logout').click(function(event) {
+// 	   event.preventDefault();
+// 	   logoutUser();
+// 	});
+// })
 
-function getAndCheckUsernames() {
-	getUsernames(displayLoginStatus);
-}
+// function loginUser(username, password) {
+//     var user = {'username': username, 'password': password};
+//     var ajax = $.ajax('/login', {
+//         type: 'POST',
+//         data: JSON.stringify(user),
+//         dataType: 'json',
+//         contentType: 'application/json'
+//     });
+//     ajax.done(displayLoginStatus);
+// };
 
-$(function() {
-	$('#username').submit(function(event) {
-	   event.preventDefault();
-	   username = $('input[name="name"]').val();
-	   password = $('input[name="password"]').val();
-	   getAndCheckUsernames();
-	});
-
-	
-})
+// function logoutUser() {
+//     var ajax = $.ajax('/logout', {
+//         type: 'GET',
+//     });
+//     ajax.done();
+// };

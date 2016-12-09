@@ -23,13 +23,17 @@ function displayStatus(data) {
     //         canRegister = false;
     //     }
     // }
-    // if(canRegister) {
-    //     data.usernames.push({"username": username, "password": password, "email": email});
-    //     $('body').append(
-    //         '<p>The username '+ username + ' has been created!</p>'
-    //         )
-    //     $('form').remove();
-    // }
+    if(data.message === "Registration Succesful") {
+        $('body').append(
+            '<p>You have registered your account!</p>'
+            )
+        $('form').remove();
+    }
+    else {
+        $('body').append(
+            '<p>Error!</p>'
+            )
+    }
     console.log(data);
 }
 
