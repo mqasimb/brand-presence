@@ -24,7 +24,7 @@ app.use(passport.session());
 
 app.use(express.static('public'));
 app.use('/profile', express.static('profile'));
-app.use('/logs', express.static('logs'));
+app.use('/mylogs', express.static('logs'));
 app.use('/register', express.static('register'));
 app.use('/login', express.static('login'));
 app.use('/studysheet', express.static('studysheet'));
@@ -153,6 +153,16 @@ app.post('/register', function(req, res) {
     });
 });
 
+app.get('/logs', function(req, res) {
+    Log.find({username: req.user.username}, function(err, logs) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.json(logs);
+    });
+});
 
 app.post('/logs', function(req, res) {
     console.log(req.user.username, Date(), req.body.title, req.body.summary, req.body.questions);
@@ -174,6 +184,28 @@ app.post('/logs', function(req, res) {
     });
 });
 
+app.put('/logs/:id', function(req, res) {
+    Log.findOneAndUpdate({id: req.params.id}, {$set:{title:req.body.title, topic:req.body.topic, summary:req.body.summary,  questions:req.body.questions}}, function(err, logs) {
+        if(err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.status(200).json(Log);
+    });
+});
+
+app.delete('/logs/:id', function(req, res) {
+    Log.findOneAndRemove({id: req.params.id}, function(err, logs) {
+        if(err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.status(200).json(Log);
+    });
+});
+
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
@@ -181,8 +213,13 @@ app.post('/login',
   });
   
 app.get('/logout', function(req, res){
+    console.log('Arsenal');
     req.logout();
     res.redirect('/');
+});
+
+app.use(function(err, req, res, next) {
+   res.send(err);
 });
 
 mongoose.connect(config.DATABASE_URL).then(function() {

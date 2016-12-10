@@ -30,6 +30,7 @@ var MOCK_STUDY_LOG = {
 };
 
 function displayStudyLog(data) {
+    $('body').append(data[0].title);
     console.log(data);
     // for (var i =0; i<data.studyLog.length; i++) {
     //     if(data.studyLog[i].user === username) {
@@ -41,10 +42,6 @@ function displayStudyLog(data) {
     //         });
     //     }
     // }
-}
-
-function getAndDisplayStudyLog() {
-	getStudyLog(displayStudyLog);
 }
 
 function displayLogs() {
@@ -61,12 +58,11 @@ function postLogs(logPost) {
         dataType: 'json',
         contentType: 'application/json'
     });
-    ajax.done(displayStudyLog);
+    ajax.done();
 }
 
 $(function() {
-    // setTimeout(displayLogs(), 1000);
-    
+    displayLogs();
 	$('#logs').submit(function(event) {
 	   event.preventDefault();	   
 	   var logPost = { 
@@ -76,6 +72,7 @@ $(function() {
 	       questions: $('textarea[name="questions"]').val()
 	   };
 	   postLogs(logPost);
+	   displayLogs();
 });
 });
 // 	   $('#new-log input').val('');
