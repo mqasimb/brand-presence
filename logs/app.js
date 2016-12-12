@@ -1,5 +1,6 @@
 //Display Data After GET Request
 function displayStudyLog(data) {
+    console.log(data);
     if(data) {
     var printData = data.reverse();
     for(var i=0; i<printData.length; i++) {
@@ -8,9 +9,22 @@ function displayStudyLog(data) {
         htmlLog += '<li data-name="topic">Topic: '+ printData[i].topic + '</li>';
         htmlLog += '<li data-name="summary">Summary: '+ printData[i].summary + '</li>';
         htmlLog += '<li data-name="questions">Questions: '+ printData[i].questions + '</li>';
-        $('.load-logs').append('<div data-id="'+data[i]._id+'">'+htmlLog+'<button class="delete-button">Delete Log</button><button class="edit-button">Edit Button</div>');
+        $('.load-logs').append('<div data-id="'+data[i]._id+'">'+htmlLog+'<button class="delete-button">Delete Log</button></div>');
     };
     console.log(data);
+    }
+    else
+        return new Error('No Data');
+}
+
+function appendStudyLog(data) {
+    if(data) {
+    var htmlLog = '';
+    htmlLog += '<li data-name="title">Title: '+ data.title + '</li>';
+    htmlLog += '<li data-name="topic">Topic: '+ data.topic + '</li>';
+    htmlLog += '<li data-name="summary">Summary: '+ data.summary + '</li>';
+    htmlLog += '<li data-name="questions">Questions: '+ data.questions + '</li>';
+    $('.load-logs').prepend('<div data-id="'+data._id+'">'+htmlLog+'<button class="delete-button">Delete Log</button></div>');
     }
     else
         return new Error('No Data');
@@ -31,7 +45,7 @@ function postLogs(logPost) {
         dataType: 'json',
         contentType: 'application/json'
     });
-    ajax.done();
+    ajax.done(appendStudyLog);
 }
 
 $(function() {
@@ -60,6 +74,9 @@ $(function() {
 	       questions: $('input[name="questions-edit"]').val()
         }
         updateLog($(this).parent().parent().data(), updatePost);
+        // console.log(this.parent());
+        var newfunction = editLogs.bind(this,updatePost);
+        newfunction();
     });
     $('body').on('dblclick','div', function(event) {
         event.stopPropagation();
@@ -71,16 +88,20 @@ $(function() {
         newForm += 'Questions<input type="text" name="'+$('li[data-name="questions"]', this).data().name+'-edit" value="'+$('li[data-name="questions"]', this).text().split(' ')[1]+'"></input></br>';
         newForm += '<button class="edit-button">Submit Edit</button></form>';
         $(this).html(newForm);
-        console.log(newForm);
-        // var updatePost = {
-        //   title: $('input[name="title"]').val(),
-	       //topic: $('input[name="topic"]').val(),
-	       //summary: $('textarea[name="summary"]').val(),
-	       //questions: $('textarea[name="questions"]').val()
-        // }
-        // updateLog($(this).parent().data(), updatePost);
     });
 });
+
+function editLogs(editData) {
+    console.log($(this).parent());
+    // console.log(editData);
+        var htmlLog = '';
+        htmlLog += '<li data-name="title">Title: '+ editData.title + '</li>';
+        htmlLog += '<li data-name="topic">Topic: '+ editData.topic + '</li>';
+        htmlLog += '<li data-name="summary">Summary: '+ editData.summary + '</li>';
+        htmlLog += '<li data-name="questions">Questions: '+ editData.questions + '</li>';
+        htmlLog += '<button class="delete-button">Delete Log</button></div>';
+        $(this).parent().replaceWith(htmlLog);
+};
 //Delete Request
 function deleteLog(send) {
     var ajax = $.ajax('/logs/'+send.id, {
@@ -97,7 +118,7 @@ function displaydeleteLog(data) {
 }
 //PUT Request
 function updateLog(update, jsonupdate) {
-    console.log(jsonupdate);
+    // console.log(jsonupdate);
     var ajax = $.ajax('/logs/'+update.id, {
        type: 'PUT',
        data: JSON.stringify(jsonupdate),
@@ -109,7 +130,7 @@ function updateLog(update, jsonupdate) {
 //Display Updated Log
 function displayUpdateLog(data) {
     if(data) {
-    console.log(data);
+    // console.log(data);
     }
     else
         return new Error('Error');
