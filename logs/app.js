@@ -1,47 +1,17 @@
-// this is mock data, but when we create our API
-// we'll have it return data that looks like this
-var MOCK_STUDY_LOG = {
-	"studyLog": [{'user': 'John', 'log': [
-        {
-            "id": "1",
-            "text": "Learned Node!",
-            "publishedAt": 1470016976609
-        },
-        {
-            "id": "2",
-            "text": "Learned Express!",
-            "publishedAt": 1470012976609
-        }]
-        },
-        {'user': 'Steve', 'log': [
-        {
-            "id": "1",
-            "text": "Learned to use the command line.",
-            "publishedAt": 1470011976609
-        },
-        {
-            "id": "2",
-            "text": "Learned about for loops",
-            "publishedAt": 1470009976609
-        }
-        ]
-        }
-]
-};
-
 function displayStudyLog(data) {
-    $('body').append(data[0].title);
+    if(data) {
+    var printData = data.reverse();
+    for(var i=0; i<printData.length; i++) {
+        var htmlLog = '';
+        for(var key in data[i]) {
+            htmlLog += key + ' ' +data[i][key]+'<br>';
+        }
+        $('.load-logs').append('<div data-id="'+data[i]._id+'">'+htmlLog+'<button class="delete-button">Delete Log</button></div>');
+    };
     console.log(data);
-    // for (var i =0; i<data.studyLog.length; i++) {
-    //     if(data.studyLog[i].user === username) {
-    // 	    $('body').append(
-    //         '<p>' + data.studyLog[i].user + '</p>');
-    //         data.studyLog[i].log.forEach(function(item) {
-    //             $('body').append(
-    //                 '<p>'+item.publishedAt+'</p><p>' + item.text + '</p>');
-    //         });
-    //     }
-    // }
+    }
+    else
+        return new Error('No Data');
 }
 
 function displayLogs() {
@@ -72,10 +42,21 @@ $(function() {
 	       questions: $('textarea[name="questions"]').val()
 	   };
 	   postLogs(logPost);
-	   displayLogs();
 });
+    $('body').on('click','.delete-button', function(event) {
+        event.stopPropagation();
+        deleteLog($(this).parent().data());
+    });
 });
-// 	   $('#new-log input').val('');
-// 	   getAndDisplayStudyLog();
-// // 	});
-// 	getAndDisplayStudyLog();
+
+function deleteLog(send) {
+    var ajax = $.ajax('/logs/'+send.id, {
+       type: 'DELETE',
+       data: JSON.stringify(send)
+    });
+    ajax.done(displaydeleteLog);
+}
+
+function displaydeleteLog(data) {
+    $('div[data-id="'+data._id+'"]').remove();
+}

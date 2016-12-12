@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -154,7 +154,7 @@ app.post('/register', function(req, res) {
 });
 
 app.get('/logs', function(req, res) {
-    Log.find({username: req.user.username}, function(err, logs) {
+    Log.find({username: req.user._id}, function(err, logs) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
@@ -167,7 +167,7 @@ app.get('/logs', function(req, res) {
 app.post('/logs', function(req, res) {
     console.log(req.user.username, Date(), req.body.title, req.body.summary, req.body.questions);
     Log.create({
-        username: req.user.username,
+        username: req.user._id,
         date: Date(),
         title: req.body.title,
         topic: req.body.topic,
@@ -196,13 +196,13 @@ app.put('/logs/:id', function(req, res) {
 });
 
 app.delete('/logs/:id', function(req, res) {
-    Log.findOneAndRemove({id: req.params.id}, function(err, logs) {
+    Log.findOneAndRemove({_id: req.params.id}, function(err, log) {
         if(err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
         }
-        res.status(200).json(Log);
+        res.status(200).json(log);
     });
 });
 
