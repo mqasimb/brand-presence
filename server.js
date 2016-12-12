@@ -185,8 +185,7 @@ app.post('/logs', function(req, res) {
 });
 
 app.put('/logs/:id', function(req, res) {
-    console.log(req.user.username, req.body.title, req.body.summary, req.body.questions);
-    Log.findOneAndUpdate({_id: req.params.id}, {$set:{title:req.body.title}, topic:req.body.topic, summary:req.body.summary, questions:req.body.questions}, function(err, log) {
+    Log.findOneAndUpdate({_id: req.params.id}, {$set:{title:req.body.title, topic:req.body.topic, summary:req.body.summary, questions:req.body.questions}}, function(err, log) {
         if(err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
@@ -214,7 +213,6 @@ app.post('/login',
   });
   
 app.get('/logout', function(req, res){
-    console.log('Arsenal');
     req.logout();
     res.redirect('/');
 });
