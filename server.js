@@ -4,6 +4,8 @@ mongoose.Promise = global.Promise;
 var bodyParser = require('body-parser');
 var User = require('./models/user-model');
 var Log = require('./models/log-model');
+var Quiz = require('./models/quiz-model');
+var Answer = require('./models/answer-model');
 var bcrypt = require('bcryptjs');
 var config = require('./config');
 var cookieParser = require('cookie-parser');
@@ -23,11 +25,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static('public'));
-app.use('/profile', express.static('profile'));
-app.use('/mylogs', express.static('logs'));
-app.use('/register', express.static('register'));
-app.use('/login', express.static('login'));
-app.use('/studysheet', express.static('studysheet'));
+app.use('/profile', express.static('views/profile'));
+app.use('/mylogs', express.static('views/logs'));
+app.use('/register', express.static('views/register'));
+app.use('/login', express.static('views/login'));
+app.use('/studysheet', express.static('views/studysheet'));
+app.use('/newquiz' , express.static('views/quiz'));
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -204,6 +207,52 @@ app.delete('/logs/:id', function(req, res) {
         }
         res.status(200).json(log);
     });
+});
+
+// app.get('/newquiz', function(req, res) {
+    
+// });
+
+// app.get('/takequiz', function(req, res) {
+    
+// });
+
+app.get('/quiz', function(req, res) {
+    Quiz.find({category: req.body.category}, function(err, quiz) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.json(quiz);
+    });
+});
+
+app.post('/quiz', function(req, res) {
+    console.log(req.body.questions, req.body.category, req.body.name, req.body.skillLevel )
+    Quiz.create({
+        questions: req.body.questions,
+        category: req.body.category,
+        name: req.body.name,
+        skillLevel: req.body.skillLevel,
+        username: req.user._id
+    }, function(err, quiz) {
+        if (err) {
+            return res.status(500).json({
+               message: 'Internal Server Error'
+            });
+        }
+        console.log(quiz);
+        res.json(quiz);
+    });
+});
+
+app.delete('/quiz/:id', function(req, res) {
+    
+});
+
+app.put('/quiz/:id', function(req, res) {
+    
 });
 
 app.post('/login',
