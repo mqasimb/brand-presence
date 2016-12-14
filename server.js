@@ -218,7 +218,8 @@ app.delete('/logs/:id', function(req, res) {
 // });
 
 app.get('/quiz', function(req, res) {
-    Quiz.find({category: req.body.category}, function(err, quiz) {
+    console.log(req.query.category);
+    Quiz.find({category: req.query.category}, function(err, quiz) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
