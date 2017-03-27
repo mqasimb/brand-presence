@@ -15,7 +15,8 @@ var UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
-    }
+    },
+    issues: [{type: mongoose.Schema.Types.ObjectId, ref: 'Issue'}]
 });
 
 UserSchema.methods.validatePassword = function(password, callback) {

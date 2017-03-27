@@ -6,14 +6,12 @@ const promise = require('redux-promise');
 const createLogger = require('redux-logger');
 const appReducer = require('./reducers/index');
 const formReducer = require('redux-form').reducer;
-const notifications = require('react-notification-system-redux').reducer;
 
 const logger = createLogger();
 
 const reducer = combineReducers({
   app: appReducer,
-  form: formReducer,
-  notifications: notifications
+  form: formReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk, promise, logger));

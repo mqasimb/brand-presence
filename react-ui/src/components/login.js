@@ -9,8 +9,7 @@ class Login extends React.Component {
     submitLogin(values) {
           this.props.dispatch(actions.loginAction(values)).then(function(bool) {
            if(bool) {
-               //If user logs in succesfully redirect to the home page
-               router.browserHistory.push('/');
+               router.hashHistory.push('/');
            } 
         });
     }
@@ -18,12 +17,9 @@ class Login extends React.Component {
           this.props.dispatch(actions.loginAction({username:'DemoAccount', password:'123456789'})).then(function(bool) {
            if(bool) {
                //If user logs in succesfully redirect to the home page
-               router.browserHistory.push('/');
+               router.hashHistory.push('/');
            } 
         });
-    }
-    inputChange(event) {
-        this.props.dispatch(actions.updateLoginInput(event.target.name, event.target.value))
     }
     
     render(props) {

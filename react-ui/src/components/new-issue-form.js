@@ -6,8 +6,14 @@ const { connect } = require('react-redux');
 
 const validate = values => {
   const errors = {}
-  if (!values.question) {
-    errors.question = 'Please enter a question'
+  if (!values.issue) {
+    errors.issue = 'Please enter an issue'
+  }
+  if (!values.topic) {
+    errors.topic = 'Please choose a topic'
+  }
+  if (values.topic === "default") {
+    errors.topic = 'Please choose a topic'
   }
   return errors
 }
@@ -28,7 +34,8 @@ const renderTextArea = ({ input, name, type, controlId, placeholder, meta: { tou
 
 const renderSelect = ({ input, label, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
     <div>
-    <FormControl {...input} name={name} componentClass="select" placeholder="JavaScript">
+    <FormControl {...input} name={name} componentClass="select">
+                <option value="default">Choose A Topic</option>
                 <option value="JavaScript">JavaScript</option>
                 <option value="CSS">CSS</option>
                 <option value="HTML">HTML</option>
@@ -43,7 +50,7 @@ const renderSelect = ({ input, label, name, type, controlId, placeholder, meta: 
     </div>
 )
 
-class NewQuestionForm extends React.Component {
+class NewIssueForm extends React.Component {
   render() {
   var formStyle = {
     paddingTop: '30px',
@@ -51,30 +58,30 @@ class NewQuestionForm extends React.Component {
   }
   const { handleSubmit, pristine, submitting } = this.props
   return (
-      <div className='new-question-form'>
+      <div className='new-issue-form'>
             <Form style={formStyle} horizontal onSubmit={handleSubmit(this.props.onSubmit.bind(this))}>
 
-            <FormGroup controlId="formControlsSelect">
+            <FormGroup controlId="formHorizontalNewIssue">
               <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
-                <Field name="topic" component={renderSelect} label="Question Topic"/>
+                <Field controlId="formHorizontalNewIssue" name="topic" component={renderSelect} label="Issue Topic"/>
               </Col>
             </FormGroup>
 
-            <FormGroup controlId="formHorizontalNewQuestion">
+            <FormGroup controlId="formHorizontalNewIssue">
               <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
-                <Field controlId="formHorizontalNewQuestion" name="title" type="text" component={renderField} label="Title" placeholder="Question title..."/>
+                <Field controlId="formHorizontalNewIssue" name="title" type="text" component={renderField} label="Title" placeholder="Question title..."/>
               </Col>
             </FormGroup>
 
-            <FormGroup controlId="formHorizontalNewQuestion">
+            <FormGroup controlId="formHorizontalNewIssue">
               <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
-                <Field controlId="formHorizontalNewQuestion" name="question" type="text" component={renderTextArea} label="Question" placeholder="Write a question..."/>
+                <Field controlId="formHorizontalNewIssue" name="issue" type="text" component={renderTextArea} label="Issue" placeholder="Write an issue..."/>
               </Col>
             </FormGroup>
             
             <FormGroup>
               <Col>
-                <Button bsStyle="info" type="submit" disabled={pristine || submitting}>Submit Question</Button>
+                <Button bsStyle="info" type="submit" disabled={pristine || submitting}>Submit Issue</Button>
               </Col>
             </FormGroup>
             </Form>
@@ -83,8 +90,8 @@ class NewQuestionForm extends React.Component {
 }
 }
 
-NewQuestionForm = reduxForm({  // a unique identifier for this form
+NewIssueForm = reduxForm({  // a unique identifier for this form
   validate               // <--- validation function given to redux-form
-})(NewQuestionForm);
+})(NewIssueForm);
 
-module.exports = NewQuestionForm;
+module.exports = NewIssueForm;

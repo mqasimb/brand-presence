@@ -23,7 +23,7 @@ class App extends React.Component {
         router.hashHistory.push('/register');
     }
     render(props) {
-        var isLoggedIn = true
+        var isLoggedIn = this.props.auth.authenticated;
         const LinkStyle = {
             'color': '#06D7D4',
             textAlign: 'center'
@@ -80,6 +80,7 @@ class App extends React.Component {
 
 function mapStateToProps(state, props) {
     return ({
+        auth: state.app.auth
     })
 }
 

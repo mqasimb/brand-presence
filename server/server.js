@@ -1,36 +1,30 @@
-var express = require('express');
-var mongoose = require('mongoose');
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-var bodyParser = require('body-parser');
-var User = require('./models/user-model');
-var Log = require('./models/log-model');
-var Quiz = require('./models/quiz-model');
-var Answer = require('./models/answer-model');
-var bcrypt = require('bcryptjs');
-var config = require('./config');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
+const bodyParser = require('body-parser');
+const path = require('path');
+const expressJWT = require('express-jwt');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
-var app = express();
+const config = require('./config');
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const User = require('./models/user-model');
+const Issue = require('./models/issue-model');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+const app = express();
 
-app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: true }));
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+const JwtStrategy = require('passport-jwt').Strategy,
+    ExtractJwt = require('passport-jwt').ExtractJwt;
+const opts = {}
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(express.static('public'));
-app.use('/profile', express.static('views/profile'));
-app.use('/mylogs', express.static('views/logs'));
-app.use('/register', express.static('views/register'));
-app.use('/login', express.static('views/login'));
-app.use('/studysheet', express.static('views/studysheet'));
-app.use('/newquiz' , express.static('views/quiz'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -40,6 +34,84 @@ passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
     done(err, user);
   });
+});
+
+app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+
+
+app.post('/users/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    console.log('login route before token')
+    const token = jwt.sign({
+        username: req.user.username,
+        _id: req.user._id
+    }, config.jwtSecret);
+    console.log('login route token created', token)
+    res.json({ token });
+  });
+  
+app.get('/users/logout', function(req, res){
+    console.log('logout route')
+    req.logout();
+    res.redirect('/login');
+});
+
+app.get('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    User.findOne({username: req.user.username}).populate('issues').exec(function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.json(user.issues);
+    });
+});
+
+app.post('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.create({title: req.body.title, issue: req.body.issue, topic: req.body.topic, solved: false, date: Date.now(), username: req.user.username}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        issue.save(function(err) {
+            if(err) {
+                return res.status(500).json({
+                message: 'Internal Server Error'
+            })
+            }
+            User.findOne({username: req.user.username}, function(err, user) {
+                user.issues.push(issue);
+                user.save(function(err) {
+                    if(err) {
+                        res.status(500).json({
+                            message: 'Internal Server Error'
+                        });
+                    }
+                    res.json(issue);
+                  })
+            })
+        })
+    });
+});
+
+app.put('/api/issue/:id', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOne({_id: req.params.id}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        issue.title = req.body.title;
+        issue.issue = req.body.issue;
+        issue.save(function(err){
+            if(err) {
+                return res.json({message: 'Internal Server Error'})
+            }
+            res.json(issue);
+        })
+    });
 });
 
 var strategy = new LocalStrategy(function(username, password, callback) {
@@ -72,7 +144,8 @@ var strategy = new LocalStrategy(function(username, password, callback) {
 
 passport.use(strategy);
 
-app.post('/register', function(req, res) {
+app.post('/users/register', function(req, res) {
+    console.log(req.body)
     if (!req.body) {
         return res.status(400).json({
             message: "No request body"
@@ -127,14 +200,14 @@ app.post('/register', function(req, res) {
     bcrypt.genSalt(10, function(err, salt) {
         if (err) {
             return res.status(500).json({
-                message: 'Internal server error'
+                message: 'Internal server error1'
             });
         }
 
         bcrypt.hash(password, salt, function(err, hash) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Internal server error'
+                    message: 'Internal server error2'
                 });
             }
 
@@ -145,9 +218,11 @@ app.post('/register', function(req, res) {
             });
 
             user.save(function(err) {
+                console.log(user)
                 if (err) {
+                    console.log(err)
                     return res.status(500).json({
-                        message: 'Internal server error'
+                        message: 'Internal server error3'
                     });
                 }
                 return res.status(201).json({message: 'Registration Succesful'});
@@ -156,123 +231,36 @@ app.post('/register', function(req, res) {
     });
 });
 
-app.get('/logs', function(req, res) {
-    Log.find({username: req.user._id}, function(err, logs) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        res.json(logs);
-    });
-});
-
-app.post('/logs', function(req, res) {
-    console.log(req.user.username, Date(), req.body.title, req.body.summary, req.body.questions);
-    Log.create({
-        username: req.user._id,
-        date: Date(),
-        title: req.body.title,
-        topic: req.body.topic,
-        summary: req.body.summary,
-        questions: req.body.questions
-    }, function(err, log) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        console.log(log);
-        res.status(201).json(log);
-    });
-});
-
-app.put('/logs/:id', function(req, res) {
-    Log.findOneAndUpdate({_id: req.params.id}, {$set:{title:req.body.title, topic:req.body.topic, summary:req.body.summary, questions:req.body.questions}}, function(err, log) {
-        if(err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        res.status(200).json(log);
-    });
-});
-
-app.delete('/logs/:id', function(req, res) {
-    Log.findOneAndRemove({_id: req.params.id}, function(err, log) {
-        if(err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        res.status(200).json(log);
-    });
-});
-
-// app.get('/newquiz', function(req, res) {
-    
-// });
-
-// app.get('/takequiz', function(req, res) {
-    
-// });
-
-app.get('/quiz', function(req, res) {
-    console.log(req.query.category);
-    Quiz.find({category: req.query.category}, function(err, quiz) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        res.json(quiz);
-    });
-});
-
-app.post('/quiz', function(req, res) {
-    console.log(req.body.questions, req.body.category, req.body.name, req.body.skillLevel )
-    Quiz.create({
-        questions: req.body.questions,
-        category: req.body.category,
-        name: req.body.name,
-        skillLevel: req.body.skillLevel,
-        username: req.user._id
-    }, function(err, quiz) {
-        if (err) {
-            return res.status(500).json({
-               message: 'Internal Server Error'
-            });
-        }
-        console.log(quiz);
-        res.json(quiz);
-    });
-});
-
-app.delete('/quiz/:id', function(req, res) {
-    
-});
-
-app.put('/quiz/:id', function(req, res) {
-    
-});
-
-app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/')
-  });
-  
-app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect('/');
+app.get('/*', function(req, res) {
+    res.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
 });
 
 app.use(function(err, req, res, next) {
    res.send(err);
 });
 
-mongoose.connect(config.DATABASE_URL).then(function() {
-        app.listen(process.env.PORT || 8080);
-});
+var runServer = function(callback) {
+    mongoose.connect(config.DATABASE_URL, function(err) {
+        if (err && callback) {
+            return callback(err);
+        }
 
-module.exports.app = app;
+        app.listen(config.PORT, function() {
+            console.log('Listening on localhost:' + config.PORT);
+            if (callback) {
+                callback();
+            }
+        });
+    });
+};
+
+if (require.main === module) {
+    runServer(function(err) {
+        if (err) {
+            console.error(err);
+        }
+    });
+};
+
+exports.app = app;
+exports.runServer = runServer;

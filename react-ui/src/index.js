@@ -17,24 +17,26 @@ const jwtdecode = require('jwt-decode');
 const Login = require('./components/login');
 const Register = require('./components/register');
 const Home = require('./components/home');
+const NewIssue = require('./components/new-issue');
 
 if(localStorage.jwt) {
-    setAuthorizationToken(localStorage.jwt);
-    store.dispatch(userLoggedIn(jwtdecode(localStorage.jwt)));
+	setAuthorizationToken(localStorage.jwt);
+	store.dispatch(userLoggedIn(jwtdecode(localStorage.jwt)));
 }
 
 var routes = (
-    <Provider store={store}>
-    <Router history={hashHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Home} />
-            <Route path='/login' component={Login}/>
-            <Route path='/register' component={Register}/>
-        </Route>
-    </Router>
-    </Provider>
+	<Provider store={store}>
+	<Router history={hashHistory}>
+		<Route path="/" component={App}>
+			<IndexRoute component={Home} />
+			<Route path='/login' component={Login}/>
+			<Route path='/register' component={Register}/>
+			<Route path='/new-issue' component={NewIssue}/>
+		</Route>
+	</Router>
+	</Provider>
 )
 
 document.addEventListener('DOMContentLoaded', function() {
-    ReactDOM.render(routes, document.getElementById('root'));
+	ReactDOM.render(routes, document.getElementById('root'));
 });
