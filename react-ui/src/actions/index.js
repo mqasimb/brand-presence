@@ -121,11 +121,11 @@ export function editIssueSuccessful(data) {
     })
 }
 
-export function deleteIssue(data) {
+export function deleteIssue(issueID) {
     return function(dispatch) {
-        return axios.delete('/api/issue', data)
+        return axios.delete('/api/issue/'+issueID)
         .then(function(response) {
-            return dispatch(deleteIssueSuccessful());
+            return dispatch(deleteIssueSuccessful(response.data));
         })
         .catch(function(err) {
             console.log(err);
@@ -137,6 +137,86 @@ export const DELETE_ISSUE_SUCCESSFUL = 'DELETE_ISSUE_SUCCESSFUL';
 export function deleteIssueSuccessful(data) {
     return ({
         type: DELETE_ISSUE_SUCCESSFUL,
+        data: data
+    })
+}
+
+export function markIssueSolved(isSolved, issueID) {
+	return function(dispatch) {
+		return axios.put('/api/issue/solve/'+issueID, {solved: !isSolved})
+		.then(function(response) {
+			return dispatch(issueSolvedSuccessful(response.data));
+		})
+		.catch(function(err) {
+			console.log(err);
+		})
+	}
+}
+
+export const ISSUE_SOLVED_SUCCESSFUL = 'ISSUE_SOLVED_SUCCESSFUL';
+export function issueSolvedSuccessful(data) {
+    return ({
+        type: ISSUE_SOLVED_SUCCESSFUL,
+        data: data
+    })
+}
+
+export function addNewURL(data, issueID) {
+    return function(dispatch) {
+        return axios.post('/api/issue/url/'+issueID, data)
+        .then(function(response) {
+            return dispatch(addNewURLSuccessful(response.data));
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+}
+
+export const ADD_NEW_URL_SUCCESSFUL = 'ADD_NEW_URL_SUCCESSFUL';
+export function addNewURLSuccessful(data) {
+    return ({
+        type: ADD_NEW_URL_SUCCESSFUL,
+        data: data
+    })
+}
+
+export function editURL(data, postID, issueID) {
+    return function(dispatch) {
+        return axios.put('/api/issue/url/'+postID+'/'+issueID, data)
+        .then(function(response) {
+            return dispatch(editURLSuccessful(response.data));
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+}
+
+export const EDIT_URL_SUCCESSFUL = 'EDIT_URL_SUCCESSFUL';
+export function editURLSuccessful(data) {
+    return ({
+        type: EDIT_URL_SUCCESSFUL,
+        data: data
+    })
+}
+
+export function deleteURL(postID, issueID) {
+    return function(dispatch) {
+        return axios.delete('/api/issue/url/'+postID+'/'+issueID)
+        .then(function(response) {
+            return dispatch(deleteURLSuccessful(response.data));
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+}
+
+export const DELETE_URL_SUCCESSFUL = 'DELETE_URL_SUCCESSFUL';
+export function deleteURLSuccessful(data) {
+    return ({
+        type: DELETE_URL_SUCCESSFUL,
         data: data
     })
 }

@@ -1,5 +1,13 @@
 var mongoose = require('mongoose');
 
+var LinkSchema = new mongoose.Schema({
+    url: { 
+        type: String,
+        required: true,
+        uniqure: true
+    }
+})
+
 var IssueSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -17,7 +25,7 @@ var IssueSchema = new mongoose.Schema({
     	type: Boolean,
     	required: true
     },
-    helpfulLinks: [String],
+    helpfulLinks: [LinkSchema],
     date: Date,
     username: { 
         type: String, 

@@ -42,7 +42,9 @@ class App extends React.Component {
         <LinkContainer to='/login'><NavItem eventKey={1}>Login</NavItem></LinkContainer>
         <LinkContainer to='/register'><NavItem eventKey={2}>Register</NavItem></LinkContainer>
         </Nav>;
-        var loggedInUser = <Nav pullRight><NavItem className="nav-text-container" style={LinkStyle} href='' onClick={this.userLogout.bind(this)}><div style={navButtonStyle}></div><span className='nav-text'>Logout</span></NavItem></Nav>;
+        var loggedInUser = <Nav pullRight>
+        <LinkContainer to='/new-issue'><NavItem className="nav-text-container" style={LinkStyle}><div style={navButtonStyle}></div><span className='nav-text'>Post New Issue</span></NavItem></ LinkContainer>
+        <NavItem className="nav-text-container" style={LinkStyle} href='' onClick={this.userLogout.bind(this)}><div style={navButtonStyle}></div><span className='nav-text'>Logout</span></NavItem></Nav>;
         var topStyle={
             'overflowX': 'hidden',
             height: '100vh',

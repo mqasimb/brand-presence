@@ -103,6 +103,7 @@ app.put('/api/issue/:id', expressJWT({ secret: config.jwtSecret}), function(req,
                 message: 'Internal Server Error'
             });
         }
+        issue.topic = req.body.topic;
         issue.title = req.body.title;
         issue.issue = req.body.issue;
         issue.save(function(err){
@@ -110,6 +111,102 @@ app.put('/api/issue/:id', expressJWT({ secret: config.jwtSecret}), function(req,
                 return res.json({message: 'Internal Server Error'})
             }
             res.json(issue);
+        })
+    });
+});
+
+app.delete('/api/issue/:id', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOneAndRemove({_id: req.params.id}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+            res.json(issue);
+    });
+});
+
+app.put('/api/issue/solve/:id', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOne({_id: req.params.id}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        issue.solved = req.body.solved;
+        issue.save(function(err){
+            if(err) {
+                return res.json({message: 'Internal Server Error'})
+            }
+            res.json(issue);
+        })
+    });
+});
+
+app.post('/api/issue/url/:id', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOne({_id: req.params.id}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        issue.helpfulLinks.push({url: req.body.url});
+        issue.save(function(err) {
+            if(err) {
+                return res.status(500).json({
+                message: 'Internal Server Error'
+            })
+            }
+            res.json(issue);  
+        })
+    });
+});
+
+app.put('/api/issue/url/:postID/:urlID', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOne({_id: req.params.postID}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        var firstIndex = issue.helpfulLinks.findIndex(function(link) {
+            return link._id == req.params.urlID
+        })
+        if(firstIndex > -1) {
+            issue.helpfulLinks[firstIndex].url = req.body.url;
+        }
+        issue.save(function(err) {
+            if(err) {
+                return res.status(500).json({
+                message: 'Internal Server Error'
+            })
+            }
+            res.json(issue);  
+        })
+    });
+});
+
+app.delete('/api/issue/url/:postID/:urlID', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOne({_id: req.params.postID}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        var firstIndex = issue.helpfulLinks.findIndex(function(link) {
+            return link._id == req.params.urlID
+        })
+        console.log(firstIndex, 'firstindex')
+        if(firstIndex > -1) {
+            issue.helpfulLinks.splice(firstIndex, 1);
+        }
+        issue.save(function(err) {
+            if(err) {
+                return res.status(500).json({
+                message: 'Internal Server Error'
+            })
+            }
+            res.json(issue);  
         })
     });
 });
