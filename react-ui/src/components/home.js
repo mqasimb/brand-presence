@@ -13,7 +13,7 @@ class Home extends React.Component {
     
     render() {
         var issues = this.props.issueData.map((issue) => {
-            return <Issue key={issue.date} id={issue._id} solved={issue.solved} topic={issue.topic} title={issue.title} issue={issue.issue} date={issue.date} helpfulLinks={issue.helpfulLinks}/>
+            return <Issue key={issue.date} id={issue._id} solution={issue.solution} solved={issue.solved} topic={issue.topic} title={issue.title} issue={issue.issue} date={issue.date} helpfulLinks={issue.helpfulLinks}/>
         })
         return (
             <div>

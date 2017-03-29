@@ -99,6 +99,39 @@ var appReducer = function(state, action) {
         return newState;
     }
 
+    if(action.type === actions.ADD_SOLUTION_SUCCESSFUL) {
+    	var firstIndex = newState.issueData.findIndex(function(issue) {
+    		return action.data._id === issue._id;	
+    	})
+    	if(firstIndex > -1) {
+    		newState.issueData[firstIndex] = Object.assign({}, action.data);
+    		newState.issueData = newState.issueData.slice();
+    	}
+        return newState;
+    }
+
+    if(action.type === actions.EDIT_SOLUTION_SUCCESSFUL) {
+    	var firstIndex = newState.issueData.findIndex(function(issue) {
+    		return action.data._id === issue._id;	
+    	})
+    	if(firstIndex > -1) {
+    		newState.issueData[firstIndex] = Object.assign({}, action.data);
+    		newState.issueData = newState.issueData.slice();
+    	}
+        return newState;
+    }
+
+    if(action.type === actions.DELETE_SOLUTION_SUCCESSFUL) {
+    	var firstIndex = newState.issueData.findIndex(function(issue) {
+    		return action.data._id === issue._id;	
+    	})
+    	if(firstIndex > -1) {
+    		newState.issueData[firstIndex] = Object.assign({}, action.data);
+    		newState.issueData = newState.issueData.slice();
+    	}
+        return newState;
+    }
+
     return state;
 }
 

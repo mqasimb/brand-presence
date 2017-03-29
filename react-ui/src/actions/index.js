@@ -181,9 +181,9 @@ export function addNewURLSuccessful(data) {
     })
 }
 
-export function editURL(data, postID, issueID) {
+export function editURL(data, postID, urlID) {
     return function(dispatch) {
-        return axios.put('/api/issue/url/'+postID+'/'+issueID, data)
+        return axios.put('/api/issue/url/'+postID+'/'+urlID, data)
         .then(function(response) {
             return dispatch(editURLSuccessful(response.data));
         })
@@ -201,9 +201,9 @@ export function editURLSuccessful(data) {
     })
 }
 
-export function deleteURL(postID, issueID) {
+export function deleteURL(postID, urlID) {
     return function(dispatch) {
-        return axios.delete('/api/issue/url/'+postID+'/'+issueID)
+        return axios.delete('/api/issue/url/'+postID+'/'+urlID)
         .then(function(response) {
             return dispatch(deleteURLSuccessful(response.data));
         })
@@ -217,6 +217,66 @@ export const DELETE_URL_SUCCESSFUL = 'DELETE_URL_SUCCESSFUL';
 export function deleteURLSuccessful(data) {
     return ({
         type: DELETE_URL_SUCCESSFUL,
+        data: data
+    })
+}
+
+export function addSolution(data, issueID) {
+    return function(dispatch) {
+        return axios.post('/api/issue/solution/'+issueID, data)
+        .then(function(response) {
+            return dispatch(addSolutionSuccessful(response.data));
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+}
+
+export const ADD_SOLUTION_SUCCESSFUL = 'ADD_SOLUTION_SUCCESSFUL';
+export function addSolutionSuccessful(data) {
+    return ({
+        type: ADD_SOLUTION_SUCCESSFUL,
+        data: data
+    })
+}
+
+export function editSolution(data, issueID) {
+    return function(dispatch) {
+        return axios.put('/api/issue/solution/'+issueID, data)
+        .then(function(response) {
+            return dispatch(editSolutionSuccessful(response.data));
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+}
+
+export const EDIT_SOLUTION_SUCCESSFUL = 'EDIT_SOLUTION_SUCCESSFUL';
+export function editSolutionSuccessful(data) {
+    return ({
+        type: EDIT_SOLUTION_SUCCESSFUL,
+        data: data
+    })
+}
+
+export function deleteSolution(issueID) {
+    return function(dispatch) {
+        return axios.delete('/api/issue/solution/'+issueID)
+        .then(function(response) {
+            return dispatch(deleteSolutionSuccessful(response.data));
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+}
+
+export const DELETE_SOLUTION_SUCCESSFUL = 'DELETE_SOLUTION_SUCCESSFUL';
+export function deleteSolutionSuccessful(data) {
+    return ({
+        type: DELETE_SOLUTION_SUCCESSFUL,
         data: data
     })
 }

@@ -4,7 +4,7 @@ var LinkSchema = new mongoose.Schema({
     url: { 
         type: String,
         required: true,
-        uniqure: true
+        unique: true
     }
 })
 
@@ -24,6 +24,9 @@ var IssueSchema = new mongoose.Schema({
     solved: {
     	type: Boolean,
     	required: true
+    },
+    solution: {
+        type: String
     },
     helpfulLinks: [LinkSchema],
     date: Date,

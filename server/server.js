@@ -143,6 +143,63 @@ app.put('/api/issue/solve/:id', expressJWT({ secret: config.jwtSecret}), functio
     });
 });
 
+app.post('/api/issue/solution/:id', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOne({_id: req.params.id}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        issue.solution = req.body.solution;
+        issue.save(function(err) {
+            if(err) {
+                return res.status(500).json({
+                message: 'Internal Server Error'
+            })
+            }
+            res.json(issue);  
+        })
+    });
+});
+
+app.put('/api/issue/solution/:id', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOne({_id: req.params.id}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        issue.solution = req.body.solution;
+        issue.save(function(err) {
+            if(err) {
+                return res.status(500).json({
+                message: 'Internal Server Error'
+            })
+            }
+            res.json(issue);  
+        })
+    });
+});
+
+app.delete('/api/issue/solution/:id', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    Issue.findOne({_id: req.params.postID}, function(err, issue) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        issue.solution = '';
+        issue.save(function(err) {
+            if(err) {
+                return res.status(500).json({
+                message: 'Internal Server Error'
+            })
+            }
+            res.json(issue);  
+        })
+    });
+});
+
 app.post('/api/issue/url/:id', expressJWT({ secret: config.jwtSecret}), function(req, res) {
     Issue.findOne({_id: req.params.id}, function(err, issue) {
         if (err) {
@@ -196,7 +253,6 @@ app.delete('/api/issue/url/:postID/:urlID', expressJWT({ secret: config.jwtSecre
         var firstIndex = issue.helpfulLinks.findIndex(function(link) {
             return link._id == req.params.urlID
         })
-        console.log(firstIndex, 'firstindex')
         if(firstIndex > -1) {
             issue.helpfulLinks.splice(firstIndex, 1);
         }
