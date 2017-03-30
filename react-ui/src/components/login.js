@@ -34,8 +34,7 @@ class Login extends React.Component {
 
 function mapStateToProps(state, props) {
     return({
-        auth: state.app.auth,
-        loginInput: state.app.loginInput
+        auth: state.app.auth
     })
 }
 

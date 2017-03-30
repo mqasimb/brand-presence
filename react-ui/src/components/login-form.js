@@ -35,7 +35,7 @@ class LoginForm extends React.Component {
     borderRadius: '0'
   }
   var buttonStyle = {
-    backgroundColor: '#1683ac',
+    backgroundColor: '#77BA33',
     color: '#ffffff',
     fontFamily: 'UbuntuBold',
     fontSize: '1.25em',
@@ -44,10 +44,10 @@ class LoginForm extends React.Component {
     paddingRight: '30px',
     paddingLeft: '30px',
     borderRadius: '0',
-    borderColor: '#1683ac'
+    borderColor: '#77BA33'
   }
   var demoButtonStyle = {
-    backgroundColor: '#1683ac',
+    backgroundColor: '#77BA33',
     color: '#ffffff',
     fontFamily: 'Ubuntu',
     fontSize: '1em',
@@ -56,18 +56,18 @@ class LoginForm extends React.Component {
     paddingRight: '10px',
     paddingLeft: '10px',
     borderRadius: '0',
-    borderColor: '#1683ac',
+    borderColor: '#77BA33',
     marginTop: '10px',
     whiteSpace: 'normal'
   }
   var panelStyle = {
-    backgroundColor: '#253243',
-    color: '#00fff9',
+    backgroundColor: '#242B33',
+    color: '#81bf37',
     textAlign: 'center',
     fontFamily: 'Ubuntu',
     fontSize: '1.5em',
     borderRadius: '0',
-    borderColor: '#253243'
+    borderColor: '#242B33'
   }
   var textStyle = {
     textAlign: 'center'

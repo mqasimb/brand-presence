@@ -51,7 +51,7 @@ class RegistrationForm extends React.Component {
       borderRadius: '0'
     }
     var buttonStyle = {
-      backgroundColor: '#1683ac',
+      backgroundColor: '#77BA33',
       color: '#ffffff',
       fontFamily: 'UbuntuBold',
       fontSize: '1.25em',
@@ -60,23 +60,24 @@ class RegistrationForm extends React.Component {
       paddingRight: '30px',
       paddingLeft: '30px',
       borderRadius: '0',
-      borderColor: '#1683ac'
+      borderColor: '#81bf37'
     }
     var panelStyle = {
-      backgroundColor: '#253243',
-      color: '#00fff9',
+      backgroundColor: '#242B33',
+      color: '#81bf37',
       textAlign: 'center',
       fontFamily: 'Ubuntu',
       fontSize: '1.5em',
       borderRadius: '0',
-      borderColor: '#253243'
+      borderColor: '#242B33'
     }
     var textStyle = {
       textAlign: 'center'
     }
     var bottomReminderStyle = {
       textAlign: 'center',
-      paddingTop: '20px'
+      paddingTop: '20px',
+      color: '#81bf37'
     }
     var linkStyle = {
       textDecoration: 'underline',
@@ -129,10 +130,10 @@ class RegistrationForm extends React.Component {
                 <Button style={buttonStyle} type="submit" disabled={pristine || submitting}>Sign Up</Button>
               </Col>
             </FormGroup>
-            </Form>
             <div style={bottomReminderStyle}>
             Do you already have an account? <Link style={linkStyle} to='login'>Login</Link>
             </div>
+            </Form>
     </div>
     </Col>
   )

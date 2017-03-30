@@ -7,6 +7,7 @@ const actions = require('./actions/index');
 const { connect } = require('react-redux');
 const axios = require('axios');
 const { LinkContainer } = require('react-router-bootstrap');
+import Background from './background.jpg'
 
 class App extends React.Component {
     userLogout(event) {
@@ -47,6 +48,10 @@ class App extends React.Component {
         <NavItem className="nav-text-container" style={LinkStyle} href='' onClick={this.userLogout.bind(this)}><div style={navButtonStyle}></div><span className='nav-text'>Logout</span></NavItem></Nav>;
         var topStyle={
             'overflowX': 'hidden',
+            backgroundImage: `url(${Background})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
             height: '100vh',
             marginTop: '100px'
         }
