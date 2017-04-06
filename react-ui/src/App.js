@@ -70,7 +70,7 @@ class App extends React.Component {
             <Navbar style={navBarStyle} className="fixed-top-nav" fixedTop>
                 <Navbar.Header>
                   <Navbar.Brand>
-                    <Link style={brandStyle} to='/'>Smarter Student</Link>
+                    <Link style={brandStyle} to='/'>{ '<Code Solutions />' }</Link>
                   </Navbar.Brand>
                   <Navbar.Toggle />
                 </Navbar.Header>

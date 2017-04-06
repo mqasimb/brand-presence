@@ -5,14 +5,29 @@ const { connect } = require('react-redux');
 const actions = require('../actions/index');
 const uuid = require('uuid');
 const Issue = require('./issue');
-const { FormGroup, FormControl, ControlLabel, Panel, Modal, Button, Col, Row, Media } = require('react-bootstrap');
+const { FormGroup, FormControl, ControlLabel, Panel, Modal, Button, Col, Row, Media, Jumbotron } = require('react-bootstrap');
+
+import HTMLSVG from '../svg/html.svg';
+import CODINGSVG from '../svg/programming.svg';
+import BookmarkSVG from '../svg/bookmark.svg';
+import ListingSVG from '../svg/listing.svg';
+import ThumbsUpSVG from '../svg/thumbs-up.svg';
 
 class Home extends React.Component {
     componentDidMount() {
-        if(this.props.auth.authenticated === false) {
-            router.hashHistory.push('/login');
+        if(this.props.auth.authenticated === true) {
+            this.props.dispatch(actions.getIssues())
         }
-        this.props.dispatch(actions.getIssues())
+    }
+
+    submitLoginDemoAccount() {
+          this.props.dispatch(actions.loginAction({username:'DemoAccount', password:'123456789'}))
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps, this.props)
+        if(this.props.auth.authenticated !== nextProps.auth.authenticated) {
+            this.props.dispatch(actions.getIssues())
+        }
     }
     
     render() {
@@ -24,15 +39,59 @@ class Home extends React.Component {
             paddingBottom: '15px',
             marginTop: '10px',
             marginBottom: '10px',
-            fontFamily: 'TitilliumBold',
-            fontSize: '1.25em',
+            backgroundColor: '#0D355D',
             color: '#ffffff',
             maxWidth: '1000px',
             margin: '20px auto',
             padding: '20px'
         }
+        var svgStyle = {
+            height: '100px',
+            marginTop: '20px',
+            marginBottom: '20px'
+        }
+        var textStyle = {
+            color: '#ffffff',
+            fontSize: '1.25em',
+            fontFamily: 'TitilliumBold'
+        }
+        var mainTextStyle = {
+            color: '#009AE4',
+            fontSize: '3em',
+            fontFamily: 'TitilliumBold'
+        }
+        var jumbotronStyle = {
+            backgroundColor: '#0D355D',
+            color: '#ffffff',
+            margin: '20px auto',
+            padding: '20px',
+            textAlign: 'center'
+        }
+        var demoButtonStyle = {
+            backgroundColor: '#0E86CA',
+            color: '#ffffff',
+            fontFamily: 'TitilliumSemiBold',
+            fontSize: '1em',
+            paddingTop: '5px',
+            paddingBottom: '5px',
+            paddingRight: '10px',
+            paddingLeft: '10px',
+            borderRadius: '0',
+            borderColor: '#10A1DE',
+            marginTop: '10px',
+            whiteSpace: 'normal'
+        }
+        var demoButtonTextStyle = {
+            textAlign: 'center',
+            color: '#ffffff'
+        }
+        var listStyle = {
+            textAlign: 'center',
+            marginTop: '50px'
+        }
         return (
             <div>
+            {(this.props.auth.authenticated) ? (<div>
             <div style={newIssueStyle}>
             <Media>
               <Media.Body>
@@ -53,6 +112,24 @@ class Home extends React.Component {
             </Media>
             </div>
             {issues}
+            </div>) : (
+            <div style={newIssueStyle}>
+            <Jumbotron style={jumbotronStyle}>
+            <span style={mainTextStyle}>{'<Code Solutions />'}</span><br/>
+            <span style={textStyle}>Save All Issues You Face While Coding</span><br/>
+            <FormGroup>
+              <Col style={demoButtonTextStyle} xs={6} xsOffset={3} sm={6} smOffset={3}>
+                <Button onClick={this.submitLoginDemoAccount.bind(this)} style={demoButtonStyle}>Demo Account / Login</Button>
+              </Col>
+            </FormGroup>
+            </Jumbotron>
+            <div style={listStyle}>
+            <span style={textStyle}>Add Solutions To All Your Coding Issues</span><br/><img src={CODINGSVG} style={svgStyle}/><br/>
+            <span style={textStyle}>Save URL's For All Your Solutions</span><br/><img src={ListingSVG} style={svgStyle}/><br/>
+            <span style={textStyle}>Dont Fill Up Your Bookmarks!</span><br/><img src={BookmarkSVG} style={svgStyle}/><br/>
+            <span style={textStyle}>Sign Up Today And Start Solving!</span><br/><img src={ThumbsUpSVG} style={svgStyle}/><br/>
+            </div>
+            </div>)}
             </div>
             )
     }
