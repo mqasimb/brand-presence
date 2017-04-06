@@ -42,17 +42,14 @@ app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 app.post('/users/login',
   passport.authenticate('local'),
   function(req, res) {
-    console.log('login route before token')
     const token = jwt.sign({
         username: req.user.username,
         _id: req.user._id
     }, config.jwtSecret);
-    console.log('login route token created', token)
     res.json({ token });
   });
   
 app.get('/users/logout', function(req, res){
-    console.log('logout route')
     req.logout();
     res.redirect('/login');
 });
@@ -69,7 +66,7 @@ app.get('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res
 });
 
 app.post('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res) {
-    Issue.create({title: req.body.title, issue: req.body.issue, topic: req.body.topic, solved: false, date: Date.now(), username: req.user.username}, function(err, issue) {
+    Issue.create({title: req.body.title, issue: req.body.issue, topic: req.body.topic, solved: false, date: Date.now(), username: req.user.username, solution: null}, function(err, issue) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
@@ -298,7 +295,6 @@ var strategy = new LocalStrategy(function(username, password, callback) {
 passport.use(strategy);
 
 app.post('/users/register', function(req, res) {
-    console.log(req.body)
     if (!req.body) {
         return res.status(400).json({
             message: "No request body"
@@ -371,7 +367,6 @@ app.post('/users/register', function(req, res) {
             });
 
             user.save(function(err) {
-                console.log(user)
                 if (err) {
                     console.log(err)
                     return res.status(500).json({

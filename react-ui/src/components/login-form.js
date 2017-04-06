@@ -15,10 +15,18 @@ const validate = values => {
   return errors
 }
 
+var inputStyle = {
+  backgroundColor: '#001932',
+  color: '#ffffff',
+  borderColor: '#4C5E6F'
+}
+var errorStyle = {
+  color: '#ffffff',
+}
 const renderField = ({ input, label, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
     <div>
-    <FormControl {...input} name={name} type={type} placeholder={placeholder} />
-    <ControlLabel>{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</ControlLabel>
+    <FormControl style={inputStyle} {...input} name={name} type={type} placeholder={placeholder} />
+    <ControlLabel>{touched && ((error && <span style={errorStyle}>{error}</span>) || (warning && <span style={errorStyle}>{warning}</span>))}</ControlLabel>
     </div>
 )
 
@@ -29,52 +37,55 @@ class LoginForm extends React.Component {
     }
   render() {
   var formStyle = {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#0D355D',
     paddingBottom: '20px',
     marginTop: '2.5em',
     borderRadius: '0'
   }
   var buttonStyle = {
-    backgroundColor: '#77BA33',
+    backgroundColor: '#0E86CA',
     color: '#ffffff',
-    fontFamily: 'UbuntuBold',
+    fontFamily: 'TitilliumSemiBold',
     fontSize: '1.25em',
     paddingTop: '10px',
     paddingBottom: '10px',
     paddingRight: '30px',
     paddingLeft: '30px',
     borderRadius: '0',
-    borderColor: '#77BA33'
+    borderColor: '#10A1DE'
   }
   var demoButtonStyle = {
-    backgroundColor: '#77BA33',
+    backgroundColor: '#0E86CA',
     color: '#ffffff',
-    fontFamily: 'Ubuntu',
+    fontFamily: 'TitilliumSemiBold',
     fontSize: '1em',
     paddingTop: '5px',
     paddingBottom: '5px',
     paddingRight: '10px',
     paddingLeft: '10px',
     borderRadius: '0',
-    borderColor: '#77BA33',
+    borderColor: '#10A1DE',
     marginTop: '10px',
     whiteSpace: 'normal'
   }
   var panelStyle = {
-    backgroundColor: '#242B33',
-    color: '#81bf37',
+    backgroundColor: '#0E86CA',
+    color: '#ffffff',
     textAlign: 'center',
-    fontFamily: 'Ubuntu',
+    fontFamily: 'TitilliumSemiBold',
     fontSize: '1.5em',
     borderRadius: '0',
-    borderColor: '#242B33'
+    borderColor: '#0E86CA'
   }
   var textStyle = {
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#ffffff'
   }
   var demoReminderStyle = {
+    fontFamily: 'TitilliumSemiBold',
       textAlign: 'center',
-      paddingTop: '20px'
+      paddingTop: '20px',
+      color: '#ffffff'
     }
   const { handleSubmit, pristine, submitting } = this.props
   return (

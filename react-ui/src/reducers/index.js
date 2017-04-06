@@ -3,7 +3,8 @@ const actions = require('../actions/index');
 
 var initialState = {
         auth: {authenticated: false, user: {}},
-        issueData: []
+        issueData: [],
+        singleIssue: {}
     };
 
 var appReducer = function(state, action) {
@@ -25,6 +26,16 @@ var appReducer = function(state, action) {
 
 	if(action.type === actions.GET_ISSUES_SUCCESSFUL) {
         newState.issueData = action.data.slice();
+        return newState;
+    }
+
+    if(action.type === actions.SET_SINGLE_ISSUE) {
+        var firstIndex = newState.issueData.findIndex(function(issue) {
+            return issue._id == action.issueID
+        })
+        if(firstIndex > -1) {
+            newState.singleIssue = Object.assign({}, newState.issueData[firstIndex])
+        }
         return newState;
     }
 

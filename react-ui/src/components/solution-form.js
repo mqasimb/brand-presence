@@ -12,16 +12,24 @@ const validate = values => {
   return errors
 }
 
+var inputStyle = {
+  backgroundColor: '#001932',
+  color: '#ffffff',
+  borderColor: '#4C5E6F'
+}
+var errorStyle = {
+  color: '#ffffff',
+}
 const renderField = ({ input, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
     <div>
-    <FormControl {...input} name={name} type={type} placeholder={placeholder} />
-    <ControlLabel>{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</ControlLabel>
+    <FormControl style={inputStyle} {...input} name={name} type={type} placeholder={placeholder} />
+    <ControlLabel>{touched && ((error && <span style={errorStyle}>{error}</span>) || (warning && <span style={errorStyle}>{warning}</span>))}</ControlLabel>
     </div>
 )
 
 const renderTextArea = ({ input, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
     <div>
-    <FormControl {...input} componentClass="textarea" name={name} type={type} placeholder={placeholder} />
+    <FormControl style={inputStyle} {...input} componentClass="textarea" name={name} type={type} placeholder={placeholder} />
     <ControlLabel>{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</ControlLabel>
     </div>
 )
@@ -31,6 +39,18 @@ class SolutionForm extends React.Component {
   var formStyle = {
     paddingTop: '30px',
     textAlign: 'center'
+  }
+  var buttonStyle = {
+      backgroundColor: '#0E86CA',
+      color: '#ffffff',
+      fontFamily: 'TitilliumSemiBold',
+      fontSize: '1em',
+      paddingTop: '10px',
+      paddingBottom: '10px',
+      paddingRight: '30px',
+      paddingLeft: '30px',
+      borderRadius: '0',
+      borderColor: '#10A1DE'
   }
   const { handleSubmit, pristine, submitting } = this.props
   return (
@@ -45,10 +65,10 @@ class SolutionForm extends React.Component {
             
             <FormGroup>
               <Col>
-                <Button bsStyle="info" type="submit" disabled={pristine || submitting}>Submit Issue</Button>
+                <Button style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit Issue</Button>
               </Col>
               {(this.props.isEdit) ? (<Col>
-                <Button bsStyle="info" onClick={this.props.cancelEdit.bind(this)}>Cancel Edit</Button>
+                <Button style={buttonStyle} onClick={this.props.cancelEdit.bind(this)}>Cancel Edit</Button>
               </Col>) : (null)}
             </FormGroup>
             </Form>

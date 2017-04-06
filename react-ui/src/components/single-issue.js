@@ -1,50 +1,66 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const router = require('react-router');
+const { Link } = require('react-router');
 const actions = require('../actions/index');
-const { FormGroup, FormControl, ControlLabel, Panel, Modal, Button, Col, Row } = require('react-bootstrap');
+const { FormGroup, FormControl, ControlLabel, Panel, Modal, Button, Col, Row, Media } = require('react-bootstrap');
 const { reset } = require('redux-form');
 const EditIssueForm = require('./edit-issue-form');
 const AddURLForm = require('./add-url-form');
 const URLList = require('./url-list');
 const SolutionForm = require('./solution-form');
+const moment = require('moment');
 
 class Issue extends React.Component {
+    componentDidMount() {
+        if(this.props.auth.authenticated === false) {
+            router.hashHistory.push('/login');
+        }
+        if(this.props.issueData.length === 0) {
+            this.props.dispatch(actions.getIssues())
+        }
+    }
     constructor(props) {
         super(props);
         this.state = {edit: false, addURL: false, solutionEdit: false}
     }
     editIssue(values) {
-        this.props.dispatch(actions.editIssue(values, this.props.id))
+        this.props.dispatch(actions.editIssue(values, this.props.params.id))
             .then((boolean) => {
                 this.setState({edit: false})
             })
     }
     deleteIssue(values) {
-        this.props.dispatch(actions.deleteIssue(this.props.id))
+        this.props.dispatch(actions.deleteIssue(this.props.params.id))
+        .then(function(response) {
+            router.hashHistory.push('/');
+        })
     }
-    markAsSolved() {
-        this.props.dispatch(actions.markIssueSolved(this.props.solved, this.props.id))
+    markAsSolved(toggle) {
+        this.props.dispatch(actions.markIssueSolved(toggle, this.props.params.id))
     }
     solutionEdit(toggle) {
         this.setState({solutionEdit: toggle})
     }
     submitSolutionEdit(values) {
-        this.props.dispatch(actions.editSolution(values, this.props.id))
+        this.props.dispatch(actions.editSolution(values, this.props.params.id))
         this.setState({solutionEdit: false})
     }
     deleteSolution() {
-        this.props.dispatch(actions.deleteSolution(this.props.id))
+        this.props.dispatch(actions.deleteSolution(this.props.params.id))
     }
     submitSolution(values) {
-        this.props.dispatch(actions.addSolution(values, this.props.id))
+        this.props.dispatch(actions.addSolution(values, this.props.params.id))
+        .then(response => {
+            this.props.dispatch(actions.markIssueSolved(true, this.props.params.id))
+        })
     }
     addURLToggle(toggle) {
         this.setState({addURL: toggle})
     }
     addHelpfulURL(values) {
-        this.props.dispatch(actions.addNewURL(values, this.props.id))
-        this.props.dispatch(reset("AddURLForm-"+this.props.id))
+        this.props.dispatch(actions.addNewURL(values, this.props.params.id))
+        this.props.dispatch(reset("AddURLForm-"+this.props.params.id))
     }
     enableEdit() {
         this.setState({edit: true});
@@ -54,20 +70,71 @@ class Issue extends React.Component {
     }
     render() {
         var newIssueStyle={
-            paddingTop: '30px'
+            paddingTop: '15px',
+            paddingBottom: '15px',
+            marginTop: '10px',
+            marginBottom: '10px',
+            backgroundColor: '#0D355D',
+            color: '#ffffff',
+            maxWidth: '1000px',
+            margin: '20px auto',
+            padding: '20px'
+        }
+        var buttonStyle = {
+            backgroundColor: '#0E86CA',
+            color: '#ffffff',
+            fontSize: '1em',
+            paddingTop: '2px',
+            paddingBottom: '2px',
+            paddingRight: '5px',
+            paddingLeft: '5px',
+            borderRadius: '0',
+            borderColor: '#10A1DE',
+            marginRight: '20px',
+            marginTop: '10px',
+            marginBottom: '10px'
+        }
+        var headingStyle = {
+            fontFamily: 'TitilliumSemiBold',
+            fontSize: '1.5em',
+            color: '#009AE4'
+        }
+        var status = null;
+        var currentIssue = null;
+        var firstIndex = this.props.issueData.findIndex((issue) => {
+            return issue._id == this.props.params.id;
+        })
+        if(firstIndex > -1) {
+            currentIssue = this.props.issueData[firstIndex];
+            status = (currentIssue.solved) ? ("Solved") : ("Open");
         }
         return(
             <div style={newIssueStyle}>
-            {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+this.props.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: this.props.topic, title: this.props.title, issue: this.props.issue}}/>) : (<div><button onClick={this.enableEdit.bind(this)}>Edit</button><button onClick={this.deleteIssue.bind(this)}>Delete</button>{this.props.topic}
-            {this.props.title}
-            {this.props.issue}
-            {this.props.date}
-            {(!this.props.solution || (this.props.solution === '')) ? (<SolutionForm form={"SolutionForm-"+this.props.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />) : (this.props.solution)}
-            {(this.props.solution && this.state.solutionEdit) ? (<SolutionForm form={"SolutionEditForm-"+this.props.id} initialValues={{solution: this.props.solution}} onSubmit={this.submitSolutionEdit.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={true} />) : (<button onClick={this.solutionEdit.bind(this, true)}>Edit Solution</button>)}
-            {(this.props.solved) ? (<button onClick={this.markAsSolved.bind(this)}>Solved</button>) : (<button onClick={this.markAsSolved.bind(this)}>Mark As Solved</button>)}
-            {(this.state.addURL) ? (<button onClick={this.addURLToggle.bind(this, false)}>Hide</button>) : (<button onClick={this.addURLToggle.bind(this, true)}>Show</button>)}
-            {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
-            <URLList postID={this.props.id} list={this.props.helpfulLinks}/></div>)}
+            {(currentIssue) ? (<div><Media>
+              <Media.Body>
+                <Media.Heading>
+                <span style={headingStyle}>{currentIssue.title}</span>
+                </Media.Heading>
+                <Col xs={4} xsOffset={0}>
+                <span style={headingStyle}>Status: {status}</span>
+                </Col>
+                <Col xs={4} xsOffset={0}>
+                <span style={headingStyle}>Topic: {currentIssue.topic}</span>
+                </Col>
+                <Col xs={4} xsOffset={0}>
+                <span style={headingStyle}>Posted: {moment(currentIssue.date).calendar()}</span>
+                </Col>
+              </Media.Body>
+              <span style={headingStyle}>Issue: </span>{currentIssue.issue}<br/>
+              {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+currentIssue.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: currentIssue.topic, title: currentIssue.title, issue: currentIssue.issue}}/>) : (<div><Button style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit Issue</Button><Button style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete Issue</Button></div>)}
+            </Media>
+            {(this.state.solutionEdit) ? (<SolutionForm cancelEdit={this.solutionEdit.bind(this, false)} onSubmit={this.submitSolutionEdit.bind(this)} initialValues={{solution: currentIssue.solution}} form={"SolutionEditForm-"+currentIssue._id} isEdit={true} />) : ((currentIssue.solution) ? (<div><span style={headingStyle}>Solution: </span>{currentIssue.solution}<br/><Button style={buttonStyle} onClick={this.solutionEdit.bind(this, true)}>Edit Solution</Button></div>) : (<SolutionForm form={"SolutionForm-"+currentIssue.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />))}
+            <span style={headingStyle}>URLs: </span>
+            <URLList postID={this.props.params.id} list={currentIssue.helpfulLinks}/>
+            {(this.state.addURL) ? (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Cancel</Button>) : (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Add URL</Button>)}
+            {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.params.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
+            </div>
+            ) : (null)}
             </div>
             )
     }
@@ -75,7 +142,9 @@ class Issue extends React.Component {
 
 function mapStateToProps(state, props) {
     return( {
-
+        auth: state.app.auth,
+        issueData: state.app.issueData,
+        singleIssue: state.app.singleIssue
     } )
 }
 

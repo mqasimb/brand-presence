@@ -24,10 +24,22 @@ class URL extends React.Component {
     	this.props.dispatch(actions.deleteURL(this.props.postID, this.props.id))
    	}
     render(props) {
+        var buttonStyle = {
+            backgroundColor: '#0E86CA',
+            color: '#ffffff',
+            fontSize: '.75em',
+            paddingTop: '5px',
+            paddingBottom: '5px',
+            paddingRight: '10px',
+            paddingLeft: '10px',
+            borderRadius: '0',
+            borderColor: '#10A1DE',
+            marginRight: '20px',
+        }
         return (
             <div>
-            {(this.state.edit) ? (<EditURLForm cancelEdit={this.editOff.bind(this)} onSubmit={this.submitEdit.bind(this)} form={"EditURLForm-"+this.props.id} initialValues={{url: this.props.link}}/>) : (<div>{this.props.link}<button onClick={this.editOn.bind(this)}>Edit URL</button>
-            <button onClick={this.deleteURL.bind(this)}>Delete URL</button></div>)}
+            {(this.state.edit) ? (<EditURLForm cancelEdit={this.editOff.bind(this)} onSubmit={this.submitEdit.bind(this)} form={"EditURLForm-"+this.props.id} initialValues={{url: this.props.link}}/>) : (<div>{this.props.link}<br/><Button style={buttonStyle} onClick={this.editOn.bind(this)}>Edit URL</Button>
+            <Button style={buttonStyle} onClick={this.deleteURL.bind(this)}>Delete URL</Button></div>)}
             </div>
         )
     }

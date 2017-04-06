@@ -3,8 +3,8 @@ const chai = require('chai');
 const should = require('chai').should();
 const TestUtils = require('react-addons-test-utils');
 const { Provider } = require('react-redux');
-const store = require('./store');
-var { App } = require('./App');
+const store = require('../src/store');
+var { App } = require('../src/components/app');
 
 describe('App Component', function() {
     it('Renders Hello World',  function() {

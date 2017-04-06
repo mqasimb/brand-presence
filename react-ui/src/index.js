@@ -18,6 +18,7 @@ const Login = require('./components/login');
 const Register = require('./components/register');
 const Home = require('./components/home');
 const NewIssue = require('./components/new-issue');
+const SingleIssue = require('./components/single-issue');
 
 if(localStorage.jwt) {
 	setAuthorizationToken(localStorage.jwt);
@@ -32,6 +33,7 @@ var routes = (
 			<Route path='/login' component={Login}/>
 			<Route path='/register' component={Register}/>
 			<Route path='/new-issue' component={NewIssue}/>
+			<Route path='/issue/:id' component={SingleIssue}/>
 		</Route>
 	</Router>
 	</Provider>

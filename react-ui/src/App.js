@@ -7,7 +7,6 @@ const actions = require('./actions/index');
 const { connect } = require('react-redux');
 const axios = require('axios');
 const { LinkContainer } = require('react-router-bootstrap');
-import Background from './background.jpg'
 
 class App extends React.Component {
     userLogout(event) {
@@ -40,33 +39,38 @@ class App extends React.Component {
             fontColor: '#01b8c5'
         }
         var loggedOutUser = <Nav pullRight>
-        <LinkContainer to='/login'><NavItem eventKey={1}>Login</NavItem></LinkContainer>
-        <LinkContainer to='/register'><NavItem eventKey={2}>Register</NavItem></LinkContainer>
+        <LinkContainer className="nav-link" to='/login'><NavItem eventKey={1}><span className="nav-link">Login</span></NavItem></LinkContainer>
+        <LinkContainer className="nav-link" to='/register'><NavItem eventKey={2}><span className="nav-link">Register</span></NavItem></LinkContainer>
         </Nav>;
         var loggedInUser = <Nav pullRight>
-        <LinkContainer to='/new-issue'><NavItem className="nav-text-container" style={LinkStyle}><div style={navButtonStyle}></div><span className='nav-text'>Post New Issue</span></NavItem></ LinkContainer>
-        <NavItem className="nav-text-container" style={LinkStyle} href='' onClick={this.userLogout.bind(this)}><div style={navButtonStyle}></div><span className='nav-text'>Logout</span></NavItem></Nav>;
+        <LinkContainer className="nav-link" to='/new-issue'><NavItem className="nav-text-container" style={LinkStyle}><div style={navButtonStyle}></div><span className="nav-link">Post New Issue</span></NavItem></ LinkContainer>
+        <NavItem className="nav-text-container" style={LinkStyle} href='' onClick={this.userLogout.bind(this)}><div style={navButtonStyle}></div><span className="nav-link">Logout</span></NavItem></Nav>;
         var topStyle={
             'overflowX': 'hidden',
-            backgroundImage: `url(${Background})`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
+            backgroundColor: '#002A54',
             height: '100vh',
-            marginTop: '100px'
         }
         var brandStyle = {
-            color: '#06D7D4',
-            fontFamily: 'UbuntuLight',
-            fontSize: '1.5em'
+            color: '#00AEFF',
+            fontFamily: 'TitilliumBold',
+            fontSize: '2em'
+        }
+        var navBarStyle = {
+            backgroundColor: '#0E3762',
+            borderColor: '#0E3762',
+            paddingTop: '15px',
+            paddingBottom: '15px'
+        }
+        var childrenStyle = {
+            marginTop: '100px',
         }
         return (
             <div className="top-nav" style={topStyle}>
             <div className='nav-bar'>
-            <Navbar className="fixed-top-nav" fixedTop>
+            <Navbar style={navBarStyle} className="fixed-top-nav" fixedTop>
                 <Navbar.Header>
                   <Navbar.Brand>
-                    <Link to='/'>Smarter Student</Link>
+                    <Link style={brandStyle} to='/'>Smarter Student</Link>
                   </Navbar.Brand>
                   <Navbar.Toggle />
                 </Navbar.Header>
@@ -77,7 +81,7 @@ class App extends React.Component {
                 </Navbar.Collapse>
               </Navbar>
               </div>
-              <div className='children'>
+              <div style={childrenStyle}>
               {this.props.children}
               </div>
         </div>

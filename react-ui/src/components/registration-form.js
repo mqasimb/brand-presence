@@ -31,10 +31,19 @@ const validate = values => {
   return errors
 }
 
+var inputStyle = {
+  backgroundColor: '#001932',
+  color: '#ffffff',
+  borderColor: '#4C5E6F'
+}
+
+var errorStyle = {
+  color: '#ffffff',
+}
 const renderField = ({ input, label, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
     <div>
-    <FormControl {...input} name={name} type={type} placeholder={placeholder} />
-    <ControlLabel>{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</ControlLabel>
+    <FormControl style={inputStyle} {...input} name={name} type={type} placeholder={placeholder} />
+    <ControlLabel>{touched && ((error && <span style={errorStyle}>{error}</span>) || (warning && <span style={errorStyle}>{warning}</span>))}</ControlLabel>
     </div>
 )
 
@@ -45,31 +54,31 @@ class RegistrationForm extends React.Component {
     }
   render() {
     var formStyle = {
-      backgroundColor: '#ffffff',
+      backgroundColor: '#0D355D',
       paddingBottom: '20px',
       marginTop: '2.5em',
       borderRadius: '0'
     }
     var buttonStyle = {
-      backgroundColor: '#77BA33',
+      backgroundColor: '#0E86CA',
       color: '#ffffff',
-      fontFamily: 'UbuntuBold',
+      fontFamily: 'TitilliumSemiBold',
       fontSize: '1.25em',
       paddingTop: '10px',
       paddingBottom: '10px',
       paddingRight: '30px',
       paddingLeft: '30px',
       borderRadius: '0',
-      borderColor: '#81bf37'
+      borderColor: '#10A1DE'
     }
     var panelStyle = {
-      backgroundColor: '#242B33',
-      color: '#81bf37',
+      backgroundColor: '#0E86CA',
+      color: '#ffffff',
       textAlign: 'center',
-      fontFamily: 'Ubuntu',
+      fontFamily: 'TitilliumSemiBold',
       fontSize: '1.5em',
       borderRadius: '0',
-      borderColor: '#242B33'
+      borderColor: '#0E86CA'
     }
     var textStyle = {
       textAlign: 'center'
@@ -77,11 +86,11 @@ class RegistrationForm extends React.Component {
     var bottomReminderStyle = {
       textAlign: 'center',
       paddingTop: '20px',
-      color: '#81bf37'
+      color: '#ffffff'
     }
     var linkStyle = {
       textDecoration: 'underline',
-      fontFamily: 'UbuntuBold'
+      fontFamily: 'TitilliumSemiBold'
     }
   const { handleSubmit, pristine, submitting } = this.props
   return (

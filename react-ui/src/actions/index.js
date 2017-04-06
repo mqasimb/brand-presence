@@ -60,11 +60,12 @@ export function logoutAction(loginData) {
         }
 }
 
-export function getIssues(data) {
+export function getIssues() {
     return function(dispatch) {
         return axios.get('/api/issue')
         .then(function(response) {
-            return dispatch(getIssuesSuccessful(response.data));
+            dispatch(getIssuesSuccessful(response.data));
+            return response;
         })
         .catch(function(err) {
             console.log(err);
@@ -143,7 +144,7 @@ export function deleteIssueSuccessful(data) {
 
 export function markIssueSolved(isSolved, issueID) {
 	return function(dispatch) {
-		return axios.put('/api/issue/solve/'+issueID, {solved: !isSolved})
+		return axios.put('/api/issue/solve/'+issueID, {solved: isSolved})
 		.then(function(response) {
 			return dispatch(issueSolvedSuccessful(response.data));
 		})
@@ -278,5 +279,13 @@ export function deleteSolutionSuccessful(data) {
     return ({
         type: DELETE_SOLUTION_SUCCESSFUL,
         data: data
+    })
+}
+
+export const SET_SINGLE_ISSUE = 'SET_SINGLE_ISSUE';
+export function setSingleIssue(issueID) {
+    return ({
+        type: SET_SINGLE_ISSUE,
+        issueID: issueID
     })
 }

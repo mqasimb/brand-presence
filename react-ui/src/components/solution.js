@@ -8,7 +8,6 @@ const EditIssueForm = require('./edit-issue-form');
 const AddURLForm = require('./add-url-form');
 const URLList = require('./url-list');
 const SolutionForm = require('./solution-form');
-const moment = require('moment');
 
 class Issue extends React.Component {
     constructor(props) {
@@ -59,8 +58,8 @@ class Issue extends React.Component {
             paddingBottom: '15px',
             marginTop: '10px',
             marginBottom: '10px',
-            backgroundColor: '#0D355D',
-            color: '#ffffff',
+            backgroundColor: '#FBFBF5',
+            color: '#000000',
             maxWidth: '1000px',
             margin: '20px auto',
             padding: '20px'
@@ -78,29 +77,27 @@ class Issue extends React.Component {
         }
         var headingStyle = {
             fontFamily: 'TitilliumSemiBold',
-            fontSize: '1.25em',
-            color: '#009AE4'
+            fontSize: '1.5em',
+            color: '#7FC8D0'
         }
-        var status = (this.props.solved) ? ("Solved") : ("Open");
         return(
             <div style={newIssueStyle}>
+            {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+this.props.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: this.props.topic, title: this.props.title, issue: this.props.issue}}/>) : (<div><Button style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit</Button><Button style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete</Button>
             <Media>
               <Media.Body>
-                <Media.Heading></Media.Heading>
-                <Col xs={3} xsOffset={0}>
-                <Link to={'/issue/'+this.props.id} style={headingStyle}>{this.props.title}</Link>
-                </Col>
-                <Col xs={3} xsOffset={0}>
+                <Media.Heading style={headingStyle}>{this.props.title}{this.props.date}</Media.Heading>
+                <p>{this.props.issue}</p>
+                <Media.Left>
                 {this.props.topic}
-                </Col>
-                <Col xs={3} xsOffset={0}>
-                {status}
-                </Col>
-                <Col xs={3} xsOffset={0}>
-                {moment(this.props.date).calendar()}
-                </Col>
+                </Media.Left>
               </Media.Body>
             </Media>
+            <div className="issue-solution">{(!this.props.solution || (this.props.solution === '')) ? (<SolutionForm form={"SolutionForm-"+this.props.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />) : (this.props.solution)}</div>
+            {(this.props.solution && this.state.solutionEdit) ? (<SolutionForm form={"SolutionEditForm-"+this.props.id} initialValues={{solution: this.props.solution}} onSubmit={this.submitSolutionEdit.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={true} />) : (<Button onClick={this.solutionEdit.bind(this, true)}>Edit Your Solution</Button>)}
+            {(this.props.solved) ? (<Button style={buttonStyle} onClick={this.markAsSolved.bind(this)}>Solved</Button>) : (<Button style={buttonStyle} onClick={this.markAsSolved.bind(this)}>Mark Issue As Solved</Button>)}
+            {(this.state.addURL) ? (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Hide</Button>) : (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Show</Button>)}
+            {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
+            <URLList postID={this.props.id} list={this.props.helpfulLinks}/></div>)}
             </div>
             )
     }
