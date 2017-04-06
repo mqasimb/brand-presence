@@ -36,7 +36,7 @@ const renderField = ({ input, name, type, controlId, placeholder, meta: { touche
 const renderTextArea = ({ input, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
     <div>
     <FormControl style={inputStyle} {...input} componentClass="textarea" name={name} type={type} placeholder={placeholder} />
-    <ControlLabel>{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</ControlLabel>
+    <ControlLabel>{touched && ((error && <span style={errorStyle}>{error}</span>) || (warning && <span style={errorStyle}>{warning}</span>))}</ControlLabel>
     </div>
 )
 
@@ -54,7 +54,7 @@ const renderSelect = ({ input, label, name, type, controlId, placeholder, meta: 
                 <option value="EmberJS">EmberJS</option>
                 <option value="Algorithms">Algorithms</option>                
     </FormControl>
-    <ControlLabel>{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</ControlLabel>
+    <ControlLabel>{touched && ((error && <span style={errorStyle}>{error}</span>) || (warning && <span style={errorStyle}>{warning}</span>))}</ControlLabel>
     </div>
 )
 

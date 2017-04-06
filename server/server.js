@@ -68,12 +68,14 @@ app.get('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res
 app.post('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res) {
     Issue.create({title: req.body.title, issue: req.body.issue, topic: req.body.topic, solved: false, date: Date.now(), username: req.user.username, solution: ''}, function(err, issue) {
         if (err) {
+            console.log('1', err)
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
         }
         issue.save(function(err) {
             if(err) {
+                console.log('2', err)
                 return res.status(500).json({
                 message: 'Internal Server Error'
             })
@@ -82,6 +84,7 @@ app.post('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, re
                 user.issues.push(issue);
                 user.save(function(err) {
                     if(err) {
+                        console.log('3', err)
                         res.status(500).json({
                             message: 'Internal Server Error'
                         });
