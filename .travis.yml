@@ -14,8 +14,4 @@ deploy:
     secure: 08d1a138-b01c-455b-9d92-73e0ef738d0f
   app: smarter-student-app
   on:
-<<<<<<< HEAD
     repo: mqasimb/smarter-student
-=======
-    repo: mqasimb/smarter-student
->>>>>>> feature
