@@ -66,7 +66,7 @@ app.get('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res
 });
 
 app.post('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res) {
-    Issue.create({title: req.body.title, issue: req.body.issue, topic: req.body.topic, solved: false, date: Date.now(), username: req.user.username, solution: null}, function(err, issue) {
+    Issue.create({title: req.body.title, issue: req.body.issue, topic: req.body.topic, solved: false, date: Date.now(), username: req.user.username, solution: ''}, function(err, issue) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
