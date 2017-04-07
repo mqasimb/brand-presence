@@ -29,7 +29,12 @@ class Home extends React.Component {
             this.props.dispatch(actions.getIssues())
         }
     }
-    
+    mouseOver(event) {
+        event.target.style.backgroundColor = '#00AEFF'
+    }
+    mouseLeave(event) {
+        event.target.style.backgroundColor = '#0E86CA'
+    }
     render() {
         var issues = this.props.issueData.map((issue) => {
             return <Issue key={issue.date} id={issue._id} solution={issue.solution} solved={issue.solved} topic={issue.topic} title={issue.title} issue={issue.issue} date={issue.date} helpfulLinks={issue.helpfulLinks}/>
@@ -43,7 +48,20 @@ class Home extends React.Component {
             color: '#ffffff',
             maxWidth: '1000px',
             margin: '20px auto',
-            padding: '20px'
+            padding: '20px',
+        }
+        var issueLabelsStyle = {
+            paddingTop: '15px',
+            paddingBottom: '15px',
+            marginTop: '10px',
+            marginBottom: '10px',
+            backgroundColor: '#0D355D',
+            color: '#ffffff',
+            maxWidth: '1000px',
+            margin: '20px auto',
+            padding: '20px',
+            fontFamily: 'TitilliumSemiBold',
+            fontSize: '1.25em'
         }
         var svgStyle = {
             height: '100px',
@@ -92,7 +110,7 @@ class Home extends React.Component {
         return (
             <div>
             {(this.props.auth.authenticated) ? (<div>
-            <div style={newIssueStyle}>
+            <div style={issueLabelsStyle}>
             <Media>
               <Media.Body>
               <Media.Heading></Media.Heading>
@@ -119,7 +137,7 @@ class Home extends React.Component {
             <span style={textStyle}>Save All Issues You Face While Coding</span><br/>
             <FormGroup>
               <Col style={demoButtonTextStyle} xs={6} xsOffset={3} sm={6} smOffset={3}>
-                <Button onClick={this.submitLoginDemoAccount.bind(this)} style={demoButtonStyle}>Demo Account / Login</Button>
+                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} onClick={this.submitLoginDemoAccount.bind(this)} style={demoButtonStyle}>Demo Account / Login</Button>
               </Col>
             </FormGroup>
             </Jumbotron>

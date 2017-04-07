@@ -26,6 +26,12 @@ const renderField = ({ input, label, name, type, controlId, placeholder, meta: {
 )
 
 class AddURLForm extends React.Component {
+  mouseOver(event) {
+        event.target.style.backgroundColor = '#00AEFF'
+  }
+    mouseLeave(event) {
+        event.target.style.backgroundColor = '#0E86CA'
+  }
   render() {
   var formStyle = {
     paddingTop: '30px',
@@ -55,7 +61,7 @@ class AddURLForm extends React.Component {
             
             <FormGroup>
               <Col>
-                <Button style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit URL</Button>
+                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit URL</Button>
               </Col>
             </FormGroup>
             </Form>

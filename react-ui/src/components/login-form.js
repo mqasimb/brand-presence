@@ -31,10 +31,12 @@ const renderField = ({ input, label, name, type, controlId, placeholder, meta: {
 )
 
 class LoginForm extends React.Component {
-    submitLogin(values) {
-      console.log(values)
-        this.props.dispatch(actions.registerAction(values))
-    }
+  mouseOver(event) {
+        event.target.style.backgroundColor = '#00AEFF'
+  }
+    mouseLeave(event) {
+        event.target.style.backgroundColor = '#0E86CA'
+  }
   render() {
   var formStyle = {
     backgroundColor: '#0D355D',
@@ -99,7 +101,7 @@ class LoginForm extends React.Component {
             </div>
             <FormGroup>
               <Col style={textStyle} xs={6} xsOffset={3} sm={6} smOffset={3}>
-                <Button onClick={this.props.demoButtonAction} style={demoButtonStyle}>Demo Account / Login</Button>
+                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} onClick={this.props.demoButtonAction} style={demoButtonStyle}>Demo Account / Login</Button>
               </Col>
             </FormGroup>
 
@@ -129,7 +131,7 @@ class LoginForm extends React.Component {
             
             <FormGroup>
               <Col style={textStyle} xs={6} xsOffset={3} sm={6} smOffset={3}>
-                <Button style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit</Button>
+                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit</Button>
               </Col>
             </FormGroup>
             </Form>

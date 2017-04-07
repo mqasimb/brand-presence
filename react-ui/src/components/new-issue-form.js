@@ -59,6 +59,12 @@ const renderSelect = ({ input, label, name, type, controlId, placeholder, meta: 
 )
 
 class NewIssueForm extends React.Component {
+  mouseOver(event) {
+        event.target.style.backgroundColor = '#00AEFF'
+  }
+    mouseLeave(event) {
+        event.target.style.backgroundColor = '#0E86CA'
+  }
   render() {
   var formStyle = {
     paddingTop: '30px',
@@ -117,7 +123,7 @@ class NewIssueForm extends React.Component {
             
             <FormGroup>
               <Col>
-                <Button style={buttonStyle} bsStyle="info" type="submit" disabled={pristine || submitting}>Submit Issue</Button>
+                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} bsStyle="info" type="submit" disabled={pristine || submitting}>Submit Issue</Button>
               </Col>
             </FormGroup>
             </Form>

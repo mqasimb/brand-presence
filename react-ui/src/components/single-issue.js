@@ -24,6 +24,12 @@ class Issue extends React.Component {
         super(props);
         this.state = {edit: false, addURL: false, solutionEdit: false}
     }
+    mouseOver(event) {
+        event.target.style.backgroundColor = '#00AEFF'
+    }
+    mouseLeave(event) {
+        event.target.style.backgroundColor = '#0E86CA'
+    }
     editIssue(values) {
         this.props.dispatch(actions.editIssue(values, this.props.params.id))
             .then((boolean) => {
@@ -126,12 +132,12 @@ class Issue extends React.Component {
                 </Col>
               </Media.Body>
               <span style={headingStyle}>Issue: </span>{currentIssue.issue}<br/>
-              {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+currentIssue.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: currentIssue.topic, title: currentIssue.title, issue: currentIssue.issue}}/>) : (<div><Button style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit Issue</Button><Button style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete Issue</Button></div>)}
+              {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+currentIssue.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: currentIssue.topic, title: currentIssue.title, issue: currentIssue.issue}}/>) : (<div><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit Issue</Button><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete Issue</Button></div>)}
             </Media>
-            {(this.state.solutionEdit) ? (<SolutionForm cancelEdit={this.solutionEdit.bind(this, false)} onSubmit={this.submitSolutionEdit.bind(this)} initialValues={{solution: currentIssue.solution}} form={"SolutionEditForm-"+currentIssue._id} isEdit={true} />) : ((currentIssue.solution) ? (<div><span style={headingStyle}>Solution: </span>{currentIssue.solution}<br/><Button style={buttonStyle} onClick={this.solutionEdit.bind(this, true)}>Edit Solution</Button></div>) : (<SolutionForm form={"SolutionForm-"+currentIssue.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />))}
+            {(this.state.solutionEdit) ? (<SolutionForm cancelEdit={this.solutionEdit.bind(this, false)} onSubmit={this.submitSolutionEdit.bind(this)} initialValues={{solution: currentIssue.solution}} form={"SolutionEditForm-"+currentIssue._id} isEdit={true} />) : ((currentIssue.solution) ? (<div><span style={headingStyle}>Solution: </span>{currentIssue.solution}<br/><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.solutionEdit.bind(this, true)}>Edit Solution</Button></div>) : (<SolutionForm form={"SolutionForm-"+currentIssue.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />))}
             <span style={headingStyle}>URLs: </span>
             <URLList postID={this.props.params.id} list={currentIssue.helpfulLinks}/>
-            {(this.state.addURL) ? (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Cancel</Button>) : (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Add URL</Button>)}
+            {(this.state.addURL) ? (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Cancel</Button>) : (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Add URL</Button>)}
             {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.params.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
             </div>
             ) : (null)}

@@ -48,6 +48,12 @@ const renderField = ({ input, label, name, type, controlId, placeholder, meta: {
 )
 
 class RegistrationForm extends React.Component {
+  mouseOver(event) {
+        event.target.style.backgroundColor = '#00AEFF'
+  }
+    mouseLeave(event) {
+        event.target.style.backgroundColor = '#0E86CA'
+  }
     completeRegistration(values) {
       console.log(values)
         this.props.dispatch(actions.registerAction(values));
@@ -136,7 +142,7 @@ class RegistrationForm extends React.Component {
             
             <FormGroup>
               <Col style={textStyle} xs={6} xsOffset={3} sm={6} smOffset={3}>
-                <Button style={buttonStyle} type="submit" disabled={pristine || submitting}>Sign Up</Button>
+                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} type="submit" disabled={pristine || submitting}>Sign Up</Button>
               </Col>
             </FormGroup>
             <div style={bottomReminderStyle}>

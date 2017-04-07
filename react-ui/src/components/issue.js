@@ -53,6 +53,12 @@ class Issue extends React.Component {
     cancelEdit() {
         this.setState({edit: false});
     }
+    mouseOver(event) {
+        event.target.style.color = '#00AEFF'
+    }
+    mouseLeave(event) {
+        event.target.style.color = '#0E86CA'
+    }
     render() {
         var newIssueStyle={
             paddingTop: '15px',
@@ -88,7 +94,7 @@ class Issue extends React.Component {
               <Media.Body>
                 <Media.Heading></Media.Heading>
                 <Col xs={3} xsOffset={0}>
-                <Link to={'/issue/'+this.props.id} style={headingStyle}>{this.props.title}</Link>
+                <Link onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} to={'/issue/'+this.props.id} style={headingStyle}>{this.props.title}</Link>
                 </Col>
                 <Col xs={3} xsOffset={0}>
                 {this.props.topic}

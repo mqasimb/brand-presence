@@ -35,6 +35,12 @@ const renderTextArea = ({ input, name, type, controlId, placeholder, meta: { tou
 )
 
 class SolutionForm extends React.Component {
+  mouseOver(event) {
+        event.target.style.backgroundColor = '#00AEFF'
+  }
+    mouseLeave(event) {
+        event.target.style.backgroundColor = '#0E86CA'
+  }
   render() {
   var formStyle = {
     paddingTop: '30px',
@@ -68,7 +74,7 @@ class SolutionForm extends React.Component {
                 <Button style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit Issue</Button>
               </Col>
               {(this.props.isEdit) ? (<Col>
-                <Button style={buttonStyle} onClick={this.props.cancelEdit.bind(this)}>Cancel Edit</Button>
+                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.props.cancelEdit.bind(this)}>Cancel Edit</Button>
               </Col>) : (null)}
             </FormGroup>
             </Form>
