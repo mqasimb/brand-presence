@@ -144,7 +144,7 @@ class Home extends React.Component {
             <div style={listStyle}>
             <span style={textStyle}>Add Solutions To All Your Coding Issues</span><br/><img src={CODINGSVG} style={svgStyle}/><br/>
             <span style={textStyle}>Save URL's For All Your Solutions</span><br/><img src={ListingSVG} style={svgStyle}/><br/>
-            <span style={textStyle}>Dont Fill Up Your Bookmarks!</span><br/><img src={BookmarkSVG} style={svgStyle}/><br/>
+            <span style={textStyle}>Stop Filling Up Your Bookmarks!</span><br/><img src={BookmarkSVG} style={svgStyle}/><br/>
             <span style={textStyle}>Sign Up Today And Start Solving!</span><br/><img src={ThumbsUpSVG} style={svgStyle}/><br/>
             </div>
             </div>)}
