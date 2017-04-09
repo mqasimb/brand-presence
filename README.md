@@ -2,7 +2,7 @@
 [Hosted on Heroku](https://smarter-student-app.herokuapp.com/)
 Node Capstone project - Uses Express, React and Redux.
 
-![Screenshots]()
+![Screenshots](https://raw.githubusercontent.com/mqasimb/smarter-student/master/appimage.jpg)
 
 ## Introduction
 Code Solutions allows you to save issues that you face while coding. You can categorize each issue based on the topic and you can then add solutions which will be tied to each issue.
