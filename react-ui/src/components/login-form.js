@@ -1,7 +1,6 @@
 const React = require('react');
 const { Field, reduxForm } = require('redux-form');
 const { Panel, Form, FormControl, FormGroup, Button, Checkbox, Col, ControlLabel, Row} = require('react-bootstrap');
-const actions = require('../actions/index');
 const { connect } = require('react-redux');
 
 const validate = values => {

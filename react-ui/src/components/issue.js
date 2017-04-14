@@ -2,12 +2,8 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { Link } = require('react-router');
 const actions = require('../actions/index');
-const { FormGroup, FormControl, ControlLabel, Panel, Modal, Button, Col, Row, Media } = require('react-bootstrap');
+const { Col, Media } = require('react-bootstrap');
 const { reset } = require('redux-form');
-const EditIssueForm = require('./edit-issue-form');
-const AddURLForm = require('./add-url-form');
-const URLList = require('./url-list');
-const SolutionForm = require('./solution-form');
 const moment = require('moment');
 
 class Issue extends React.Component {
@@ -70,17 +66,6 @@ class Issue extends React.Component {
             maxWidth: '1000px',
             margin: '20px auto',
             padding: '20px'
-        }
-        var buttonStyle = {
-            backgroundColor: '#F4C23A',
-            color: '#ffffff',
-            fontSize: '1.25em',
-            paddingTop: '5px',
-            paddingBottom: '5px',
-            paddingRight: '10px',
-            paddingLeft: '10px',
-            borderRadius: '0',
-            borderColor: '#F4C23A'
         }
         var headingStyle = {
             fontFamily: 'TitilliumSemiBold',

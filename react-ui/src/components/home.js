@@ -1,13 +1,9 @@
 const React = require('react');
-const router = require('react-router');
-const Link = router.Link;
 const { connect } = require('react-redux');
 const actions = require('../actions/index');
-const uuid = require('uuid');
 const Issue = require('./issue');
-const { FormGroup, FormControl, ControlLabel, Panel, Modal, Button, Col, Row, Media, Jumbotron } = require('react-bootstrap');
+const { FormGroup, Button, Col, Media, Jumbotron } = require('react-bootstrap');
 
-import HTMLSVG from '../svg/html.svg';
 import CODINGSVG from '../svg/programming.svg';
 import BookmarkSVG from '../svg/bookmark.svg';
 import ListingSVG from '../svg/listing.svg';
@@ -142,10 +138,10 @@ class Home extends React.Component {
             </FormGroup>
             </Jumbotron>
             <div style={listStyle}>
-            <span style={textStyle}>Add Solutions To All Your Coding Issues</span><br/><img src={CODINGSVG} style={svgStyle}/><br/>
-            <span style={textStyle}>Save URL's For All Your Solutions</span><br/><img src={ListingSVG} style={svgStyle}/><br/>
-            <span style={textStyle}>Stop Filling Up Your Bookmarks!</span><br/><img src={BookmarkSVG} style={svgStyle}/><br/>
-            <span style={textStyle}>Sign Up Today And Start Solving!</span><br/><img src={ThumbsUpSVG} style={svgStyle}/><br/>
+            <span style={textStyle}>Add Solutions To All Your Coding Issues</span><br/><img role="presentation" src={CODINGSVG} style={svgStyle}/><br/>
+            <span style={textStyle}>Save URL's For All Your Solutions</span><br/><img role="presentation" src={ListingSVG} style={svgStyle}/><br/>
+            <span style={textStyle}>Stop Filling Up Your Bookmarks!</span><br/><img role="presentation" rc={BookmarkSVG} style={svgStyle}/><br/>
+            <span style={textStyle}>Sign Up Today And Start Solving!</span><br/><img role="presentation" src={ThumbsUpSVG} style={svgStyle}/><br/>
             </div>
             </div>)}
             </div>

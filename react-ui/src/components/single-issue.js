@@ -1,9 +1,8 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const router = require('react-router');
-const { Link } = require('react-router');
 const actions = require('../actions/index');
-const { FormGroup, FormControl, ControlLabel, Panel, Modal, Button, Col, Row, Media } = require('react-bootstrap');
+const { Button, Col, Media } = require('react-bootstrap');
 const { reset } = require('redux-form');
 const EditIssueForm = require('./edit-issue-form');
 const AddURLForm = require('./add-url-form');

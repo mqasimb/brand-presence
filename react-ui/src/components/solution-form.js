@@ -1,8 +1,6 @@
 const React = require('react');
 const { Field, reduxForm } = require('redux-form');
-const { Form, FormControl, FormGroup, Button, Checkbox, Col, ControlLabel} = require('react-bootstrap');
-const actions = require('../actions/index');
-const { connect } = require('react-redux');
+const { Form, FormControl, FormGroup, Button, Col, ControlLabel } = require('react-bootstrap');
 
 const validate = values => {
   const errors = {}
@@ -20,17 +18,11 @@ var inputStyle = {
 var errorStyle = {
   color: '#ffffff',
 }
-const renderField = ({ input, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
-    <div>
-    <FormControl style={inputStyle} {...input} name={name} type={type} placeholder={placeholder} />
-    <ControlLabel>{touched && ((error && <span style={errorStyle}>{error}</span>) || (warning && <span style={errorStyle}>{warning}</span>))}</ControlLabel>
-    </div>
-)
 
 const renderTextArea = ({ input, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
     <div>
     <FormControl style={inputStyle} {...input} componentClass="textarea" name={name} type={type} placeholder={placeholder} />
-    <ControlLabel>{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</ControlLabel>
+    <ControlLabel>{touched && ((error && <span style={errorStyle}>{error}</span>) || (warning && <span style={errorStyle}>{warning}</span>))}</ControlLabel>
     </div>
 )
 

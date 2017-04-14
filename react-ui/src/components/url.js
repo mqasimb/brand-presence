@@ -1,9 +1,7 @@
 const React = require('react');
-const moment = require('moment');
 const { connect } = require('react-redux');
 const actions = require('../actions/index');
-const router = require('react-router');
-const { ListGroupItem, Panel, Modal, Button, Media } = require('react-bootstrap');
+const { Button } = require('react-bootstrap');
 const EditURLForm = require('./edit-url-form');
 
 class URL extends React.Component {

@@ -2,7 +2,6 @@ const React = require('react');
 const { connect } = require('react-redux');
 const router = require('react-router');
 const actions = require('../actions/index');
-const { FormGroup, FormControl, ControlLabel, Panel, Modal, Button, Col, Row } = require('react-bootstrap');
 const NewIssueForm = require('./new-issue-form');
 const { reset } = require('redux-form');
 

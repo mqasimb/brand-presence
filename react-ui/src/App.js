@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button, Select, Glyphicon } from 'react-bootstrap';
+import React from 'react';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 const router = require('react-router');
 const Link = router.Link;
 const actions = require('./actions/index');
 const { connect } = require('react-redux');
-const axios = require('axios');
 const { LinkContainer } = require('react-router-bootstrap');
 
 class App extends React.Component {
@@ -28,15 +27,8 @@ class App extends React.Component {
             'color': '#06D7D4',
             textAlign: 'center'
         }
-        var iconSize = {
-            height: '20px',
-            fill: '#01b8c5'
-        }
         var navButtonStyle = {
             textAlign: 'center'
-        }
-        var textStyle = {
-            fontColor: '#01b8c5'
         }
         var loggedOutUser = <Nav pullRight>
         <LinkContainer className="nav-link" to='/login'><NavItem eventKey={1}><span className="nav-link">Login</span></NavItem></LinkContainer>
