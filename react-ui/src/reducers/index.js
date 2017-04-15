@@ -8,142 +8,94 @@ var initialState = {
 
 var appReducer = function(state, action) {
     state = state || initialState;
-    var newState = Object.assign({}, state);
     
     if(action.type === actions.USER_LOGGED_IN) {
-        var newChange = {};
-        newChange.authenticated = true;
-        newChange.user = action.user;
-        newState.auth = Object.assign({}, newChange);
-        return newState;
+        return {...state, auth: {authenticated: true, user: {...action.user}}}
     }
 
     if(action.type === actions.USER_LOGGED_OUT) {
-        newState = {...initialState};
-        return newState;
+        return {...initialState};
     }
 
 	if(action.type === actions.GET_ISSUES_SUCCESSFUL) {
-        newState.issueData = action.data.slice();
-        return newState;
+        return {...state, issueData: action.data};
     }
 
     if(action.type === actions.SET_SINGLE_ISSUE) {
-        var firstIndex = newState.issueData.findIndex((issue) =>
-            issue._id == action.issueID
-        )
-        if(firstIndex > -1) {
-            newState.singleIssue = {...newState.issueData[firstIndex]};
+        var index = state.issueData.findIndex((issue) => issue._id == action.issueID)
+        if(index > -1) {
+            return {...state, singleIssue: {...state.issueData[index]} }
         }
-        return newState;
     }
 
     if(action.type === actions.ADD_NEW_QUESTION_SUCCESSFUL) {
-        newState.issueData = {...action.data};
-        return newState;
+        return {...state, issueData: [...action.data]};
     }
 
     if(action.type === actions.EDIT_ISSUE_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) =>
-    		action.data._id === issue._id	
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData[firstIndex] = {...action.data};
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+            return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     if(action.type === actions.DELETE_ISSUE_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) =>
-    		action.data._id === issue._id
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData.splice(firstIndex, 1);
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+            return {...state, issueData: [...state.issueData.slice(0, index), ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     if(action.type === actions.ISSUE_SOLVED_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) =>
-    		action.data._id === issue._id
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData[firstIndex] = {...action.data};
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+            return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     if(action.type === actions.ADD_NEW_URL_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) =>
-    		action.data._id === issue._id
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData[firstIndex] = {...action.data};
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+            return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     if(action.type === actions.EDIT_URL_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) =>
-    		action.data._id === issue._id
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData[firstIndex] = {...action.data};
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+    		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     if(action.type === actions.DELETE_URL_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) =>
-    		action.data._id === issue._id
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData[firstIndex] = {...action.data};
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+    		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     if(action.type === actions.ADD_SOLUTION_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) =>
-    		action.data._id === issue._id
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData[firstIndex] = {...action.data};
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+    		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     if(action.type === actions.EDIT_SOLUTION_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) =>
-    		action.data._id === issue._id
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData[firstIndex] = {...action.data};
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+    		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     if(action.type === actions.DELETE_SOLUTION_SUCCESSFUL) {
-    	var firstIndex = newState.issueData.findIndex((issue) => 
-    		action.data._id === issue._id
-    	)
-    	if(firstIndex > -1) {
-    		newState.issueData[firstIndex] = {...action.data};
-    		newState.issueData = newState.issueData.slice();
+    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	if(index > -1) {
+    		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
-        return newState;
     }
 
     return state;
 }
 
 module.exports = appReducer;
-exports.initialState = initialState;
