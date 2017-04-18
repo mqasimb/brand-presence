@@ -209,14 +209,6 @@ app.delete('/logs/:id', function(req, res) {
     });
 });
 
-// app.get('/newquiz', function(req, res) {
-    
-// });
-
-// app.get('/takequiz', function(req, res) {
-    
-// });
-
 app.get('/quiz', function(req, res) {
     console.log(req.query.category);
     Quiz.find({category: req.query.category}, function(err, quiz) {
@@ -246,14 +238,6 @@ app.post('/quiz', function(req, res) {
         console.log(quiz);
         res.json(quiz);
     });
-});
-
-app.delete('/quiz/:id', function(req, res) {
-    
-});
-
-app.put('/quiz/:id', function(req, res) {
-    
 });
 
 app.post('/login',
