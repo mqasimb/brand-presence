@@ -48,18 +48,29 @@ class AddURLForm extends React.Component {
       borderRadius: '0',
       borderColor: '#10A1DE'
   }
+  var textStyle = {
+      color: '#ffffff',
+      textAlign: 'left',
+      marginBottom: '10px'
+  }
+  var colStyle = {
+    textAlign: 'right'
+  }
   const { handleSubmit, pristine, submitting } = this.props
   return (
       <div className='add-url-form'>
             <Form style={formStyle} horizontal onSubmit={handleSubmit(this.props.onSubmit.bind(this))}>
             <FormGroup controlId="formHorizontalAddURL">
-              <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
+              <Col componentClass={ControlLabel} style={textStyle} xs={12} sm={12}>
+                Add URL
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12}>
                 <Field controlId="formHorizontalAddURL" name="url" type="text" component={renderField} label="URL" placeholder="Provide a url..."/>
               </Col>
             </FormGroup>
             
             <FormGroup>
-              <Col>
+              <Col style={colStyle} xs={12} sm={12} md={12} lg={12}>
                 <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit URL</Button>
               </Col>
             </FormGroup>

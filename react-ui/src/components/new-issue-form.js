@@ -94,26 +94,40 @@ class NewIssueForm extends React.Component {
       fontSize: '1.5em',
       borderRadius: '0',
       borderColor: '#0D355D'
-    }
+  }
+  var textStyle = {
+      color: '#00AEFF',
+      textAlign: 'left',
+      marginBottom: '10px'
+  }
   const { handleSubmit, pristine, submitting } = this.props
   return (
   <Col xs={12} xsOffset={0} sm={12} smOffset={0} md={12} mdOffset={0} lg={12} lgOffset={0}>
       <div className='new-issue-form'>
             <Form style={formStyle} horizontal onSubmit={handleSubmit(this.props.onSubmit.bind(this))}>
-            <Panel style={panelStyle}>ADD NEW ISSUE</Panel>
+            <Panel style={panelStyle}>POST NEW ISSUE</Panel>
             <FormGroup controlId="formHorizontalNewIssue">
+              <Col componentClass={ControlLabel} style={textStyle} smOffset={3} xs={12} sm={6}>
+                Issue Topic
+              </Col>
               <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
                 <Field controlId="formHorizontalNewIssue" name="topic" component={renderSelect} label="Issue Topic"/>
               </Col>
             </FormGroup>
 
             <FormGroup controlId="formHorizontalNewIssue">
+              <Col componentClass={ControlLabel} style={textStyle} smOffset={3} xs={12} sm={6}>
+                Question Title
+              </Col>
               <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
                 <Field controlId="formHorizontalNewIssue" name="title" type="text" component={renderField} label="Title" placeholder="Question title..."/>
               </Col>
             </FormGroup>
 
             <FormGroup controlId="formHorizontalNewIssue">
+              <Col componentClass={ControlLabel} style={textStyle} smOffset={3} xs={12} sm={6}>
+                Issue
+              </Col>
               <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
                 <Field controlId="formHorizontalNewIssue" name="issue" type="text" component={renderTextArea} label="Issue" placeholder="Write an issue..."/>
               </Col>

@@ -77,7 +77,16 @@ class EditIssueForm extends React.Component {
       paddingRight: '30px',
       paddingLeft: '30px',
       borderRadius: '0',
-      borderColor: '#10A1DE'
+      borderColor: '#10A1DE',
+      marginRight: '10px'
+  }
+  var textStyle = {
+      color: '#ffffff',
+      textAlign: 'left',
+      marginBottom: '10px'
+  }
+  var colStyle = {
+    textAlign: 'right'
   }
   const { handleSubmit, pristine, submitting } = this.props
   return (
@@ -85,29 +94,35 @@ class EditIssueForm extends React.Component {
             <Form style={formStyle} horizontal onSubmit={handleSubmit(this.props.onSubmit.bind(this))}>
 
             <FormGroup controlId="formHorizontalEditIssue">
-              <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
+              <Col componentClass={ControlLabel} style={textStyle} xs={12} sm={12}>
+                Issue
+              </Col>
+              <Col xs={12} sm={12} md={10} lg={10}>
                 <Field controlId="formHorizontalEditIssue" name="topic" component={renderSelect} label="Issue Topic"/>
               </Col>
             </FormGroup>
 
             <FormGroup controlId="formHorizontalEditIssue">
-              <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
+              <Col componentClass={ControlLabel} style={textStyle} xs={12} sm={12}>
+                Title
+              </Col>
+              <Col xs={12} sm={12} md={10} lg={10}>
                 <Field controlId="formHorizontalEditIssue" name="title" type="text" component={renderField} label="Title" placeholder="Question title..."/>
               </Col>
             </FormGroup>
 
             <FormGroup controlId="formHorizontalEditIssue">
-              <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
+              <Col componentClass={ControlLabel} style={textStyle} xs={12} sm={12}>
+                Issue
+              </Col>
+              <Col xs={12} sm={12} md={10} lg={10}>
                 <Field controlId="formHorizontalEditIssue" name="issue" type="text" component={renderTextArea} label="Issue" placeholder="Write an issue..."/>
               </Col>
             </FormGroup>
             
             <FormGroup>
-              <Col>
+              <Col style={colStyle} xs={12} sm={12} md={10} lg={10}>
                 <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} type="submit" disabled={pristine || submitting}>Edit</Button>
-              </Col>
-
-              <Col>
                 <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.props.cancelEdit}>Cancel</Button>
               </Col>
             </FormGroup>

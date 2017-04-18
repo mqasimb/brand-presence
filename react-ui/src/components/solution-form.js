@@ -48,7 +48,16 @@ class SolutionForm extends React.Component {
       paddingRight: '30px',
       paddingLeft: '30px',
       borderRadius: '0',
-      borderColor: '#10A1DE'
+      borderColor: '#10A1DE',
+      marginRight: '10px'
+  }
+  var textStyle = {
+      color: '#ffffff',
+      textAlign: 'left',
+      marginBottom: '10px'
+  }
+  var colStyle = {
+    textAlign: 'right'
   }
   const { handleSubmit, pristine, submitting } = this.props
   return (
@@ -56,18 +65,20 @@ class SolutionForm extends React.Component {
             <Form style={formStyle} horizontal onSubmit={handleSubmit(this.props.onSubmit.bind(this))}>
 
             <FormGroup controlId="formHorizontalSolution">
-              <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
+              <Col componentClass={ControlLabel} style={textStyle} xs={12} sm={12}>
+                Solution
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12}>
                 <Field controlId="formHorizontalSolution" name="solution" type="text" component={renderTextArea} label="Solution" placeholder="Write a solution..."/>
               </Col>
             </FormGroup>
             
             <FormGroup>
-              <Col>
-                <Button style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit Issue</Button>
+              <Col style={colStyle} xs={12} sm={12} md={12} lg={12}>
+                <Button style={buttonStyle} type="submit" disabled={pristine || submitting}>Submit Solution</Button>
+              {(this.props.isEdit) ? (
+                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.props.cancelEdit.bind(this)}>Cancel Edit</Button>) : (null)}
               </Col>
-              {(this.props.isEdit) ? (<Col>
-                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.props.cancelEdit.bind(this)}>Cancel Edit</Button>
-              </Col>) : (null)}
             </FormGroup>
             </Form>
     </div>

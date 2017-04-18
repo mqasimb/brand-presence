@@ -6,8 +6,7 @@ var initialState = {
         singleIssue: {}
     };
 
-var appReducer = function(state, action) {
-    state = state || initialState;
+var appReducer = function(state = initialState, action) {
     
     if(action.type === actions.USER_LOGGED_IN) {
         return {...state, auth: {authenticated: true, user: {...action.user}}}

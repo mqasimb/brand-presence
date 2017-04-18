@@ -34,8 +34,12 @@ class URL extends React.Component {
             borderColor: '#10A1DE',
             marginRight: '20px',
         }
+        var divStyle = {
+            paddingTop: '5px',
+            paddingBottom: '5px'
+        }
         return (
-            <div>
+            <div style={divStyle}>
             {(this.state.edit) ? (<EditURLForm cancelEdit={this.editOff.bind(this)} onSubmit={this.submitEdit.bind(this)} form={"EditURLForm-"+this.props.id} initialValues={{url: this.props.link}}/>) : (<div>{this.props.link}<br/><Button style={buttonStyle} onClick={this.editOn.bind(this)}>Edit URL</Button>
             <Button style={buttonStyle} onClick={this.deleteURL.bind(this)}>Delete URL</Button></div>)}
             </div>
