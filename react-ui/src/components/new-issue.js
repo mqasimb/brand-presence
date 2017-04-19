@@ -19,15 +19,14 @@ class NewIssue extends React.Component {
         }
         return(
             <div style={newIssueStyle}>
-            <NewIssueForm form='NewIssueForm' onSubmit={this.submitIssue.bind(this)}/>
+                <NewIssueForm form='NewIssueForm' onSubmit={this.submitIssue.bind(this)}/>
             </div>
-            )
+        )
     }
 }
 
 function mapStateToProps(state, props) {
     return( {
-
     } )
 }
 

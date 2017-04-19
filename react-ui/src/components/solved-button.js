@@ -80,33 +80,32 @@ class Issue extends React.Component {
             fontSize: '1.5em',
             color: '#7FC8D0'
         }
-        return(
+        return (
             <div style={newIssueStyle}>
-            {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+this.props.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: this.props.topic, title: this.props.title, issue: this.props.issue}}/>) : (<div><Button style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit</Button><Button style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete</Button>
-            <Media>
-              <Media.Body>
-                <Media.Heading style={headingStyle}>{this.props.title}{this.props.date}</Media.Heading>
-                <p>{this.props.issue}</p>
-                <Media.Left>
-                {this.props.topic}
-                </Media.Left>
-              </Media.Body>
-            </Media>
-            <div className="issue-solution">{(!this.props.solution || (this.props.solution === '')) ? (<SolutionForm form={"SolutionForm-"+this.props.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />) : (this.props.solution)}</div>
-            {(this.props.solution && this.state.solutionEdit) ? (<SolutionForm form={"SolutionEditForm-"+this.props.id} initialValues={{solution: this.props.solution}} onSubmit={this.submitSolutionEdit.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={true} />) : (<Button onClick={this.solutionEdit.bind(this, true)}>Edit Your Solution</Button>)}
-            {(this.props.solved) ? (<Button style={buttonStyle} onClick={this.markAsSolved.bind(this)}>Solved</Button>) : (<Button style={buttonStyle} onClick={this.markAsSolved.bind(this)}>Mark Issue As Solved</Button>)}
-            {(this.state.addURL) ? (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Hide</Button>) : (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Show</Button>)}
-            {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
-            <URLList postID={this.props.id} list={this.props.helpfulLinks}/></div>)}
+                {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+this.props.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: this.props.topic, title: this.props.title, issue: this.props.issue}}/>) : (<div><Button style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit</Button><Button style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete</Button>
+                <Media>
+                    <Media.Body>
+                        <Media.Heading style={headingStyle}>{this.props.title}{this.props.date}</Media.Heading>
+                        <p>{this.props.issue}</p>
+                        <Media.Left>
+                            {this.props.topic}
+                        </Media.Left>
+                    </Media.Body>
+                </Media>
+                <div className="issue-solution">{(!this.props.solution || (this.props.solution === '')) ? (<SolutionForm form={"SolutionForm-"+this.props.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />) : (this.props.solution)}</div>
+                {(this.props.solution && this.state.solutionEdit) ? (<SolutionForm form={"SolutionEditForm-"+this.props.id} initialValues={{solution: this.props.solution}} onSubmit={this.submitSolutionEdit.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={true} />) : (<Button onClick={this.solutionEdit.bind(this, true)}>Edit Your Solution</Button>)}
+                {(this.props.solved) ? (<Button style={buttonStyle} onClick={this.markAsSolved.bind(this)}>Solved</Button>) : (<Button style={buttonStyle} onClick={this.markAsSolved.bind(this)}>Mark Issue As Solved</Button>)}
+                {(this.state.addURL) ? (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Hide</Button>) : (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Show</Button>)}
+                {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
+                <URLList postID={this.props.id} list={this.props.helpfulLinks}/></div>)}
             </div>
-            )
+        )
     }
 }
 
 function mapStateToProps(state, props) {
-    return( {
-
-    } )
+    return({
+    })
 }
 
 var Container = connect(mapStateToProps)(Issue);

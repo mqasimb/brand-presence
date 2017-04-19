@@ -119,42 +119,42 @@ class Issue extends React.Component {
         }
         var status = null;
         var currentIssue = null;
-        var firstIndex = this.props.issueData.findIndex((issue) => {
-            return issue._id == this.props.params.id;
-        })
+        var firstIndex = this.props.issueData.findIndex((issue) =>
+            issue._id == this.props.params.id
+        )
         if(firstIndex > -1) {
             currentIssue = this.props.issueData[firstIndex];
             status = (currentIssue.solved) ? ("Solved") : ("Open");
         }
-        return(
+        return (
             <div style={newIssueStyle}>
-            {(currentIssue) ? (<div><Media>
-              <Media.Body>
-                <Media.Heading>
-                <span style={titleStyle}>{currentIssue.title}</span>
-                </Media.Heading>
-                <Col style={colStyle} xs={4} xsOffset={0}>
-                <span style={headingStyle}>Status: {status}</span>
-                </Col>
-                <Col style={colStyle} xs={4} xsOffset={0}>
-                <span style={headingStyle}>Topic: {currentIssue.topic}</span>
-                </Col>
-                <Col style={colStyle} xs={4} xsOffset={0}>
-                <span style={headingStyle}>Posted: {moment(currentIssue.date).calendar()}</span>
-                </Col>
-              </Media.Body>
-              <div style={divStyle}><span style={headingStyle}>Issue: </span>{currentIssue.issue}</div>
-              {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+currentIssue.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: currentIssue.topic, title: currentIssue.title, issue: currentIssue.issue}}/>) : (<div><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit Issue</Button><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete Issue</Button></div>)}
-            </Media>
-            {(this.state.solutionEdit) ? (<SolutionForm cancelEdit={this.solutionEdit.bind(this, false)} onSubmit={this.submitSolutionEdit.bind(this)} initialValues={{solution: currentIssue.solution}} form={"SolutionEditForm-"+currentIssue._id} isEdit={true} />) : ((currentIssue.solution) ? (<div style={divStyle}><span style={headingStyle}>Solution: </span>{currentIssue.solution}<br/><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.solutionEdit.bind(this, true)}>Edit Solution</Button></div>) : (<SolutionForm form={"SolutionForm-"+currentIssue.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />))}
-            <div style={divStyle}><span style={headingStyle}>URLs: </span></div>
-            <URLList postID={this.props.params.id} list={currentIssue.helpfulLinks}/>
-            {(this.state.addURL) ? (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Cancel</Button>) : (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Add URL</Button>)}
-            {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.params.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
+                {(currentIssue) ? (<div>
+                    <Media>
+                        <Media.Body>
+                            <Media.Heading>
+                                <span style={titleStyle}>{currentIssue.title}</span>
+                            </Media.Heading>
+                            <Col style={colStyle} xs={4} xsOffset={0}>
+                                <span style={headingStyle}>Status: {status}</span>
+                            </Col>
+                            <Col style={colStyle} xs={4} xsOffset={0}>
+                                <span style={headingStyle}>Topic: {currentIssue.topic}</span>
+                            </Col>
+                            <Col style={colStyle} xs={4} xsOffset={0}>
+                                <span style={headingStyle}>Posted: {moment(currentIssue.date).calendar()}</span>
+                            </Col>
+                        </Media.Body>
+                        <div style={divStyle}><span style={headingStyle}>Issue: </span>{currentIssue.issue}</div>
+                        {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+currentIssue.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: currentIssue.topic, title: currentIssue.title, issue: currentIssue.issue}}/>) : (<div><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit Issue</Button><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete Issue</Button></div>)}
+                    </Media>
+                    {(this.state.solutionEdit) ? (<SolutionForm cancelEdit={this.solutionEdit.bind(this, false)} onSubmit={this.submitSolutionEdit.bind(this)} initialValues={{solution: currentIssue.solution}} form={"SolutionEditForm-"+currentIssue._id} isEdit={true} />) : ((currentIssue.solution) ? (<div style={divStyle}><span style={headingStyle}>Solution: </span>{currentIssue.solution}<br/><Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.solutionEdit.bind(this, true)}>Edit Solution</Button></div>) : (<SolutionForm form={"SolutionForm-"+currentIssue.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />))}
+                    <div style={divStyle}><span style={headingStyle}>URLs: </span></div>
+                    <URLList postID={this.props.params.id} list={currentIssue.helpfulLinks}/>
+                    {(this.state.addURL) ? (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Cancel</Button>) : (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Add URL</Button>)}
+                    {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.params.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
+                </div>) : (null)}
             </div>
-            ) : (null)}
-            </div>
-            )
+        )
     }
 }
 

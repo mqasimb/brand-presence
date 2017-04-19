@@ -73,34 +73,33 @@ class Issue extends React.Component {
             color: '#009AE4'
         }
         var status = (this.props.solved) ? ("Solved") : ("Open");
-        return(
+        return (
             <div style={newIssueStyle}>
-            <Media>
-              <Media.Body>
-                <Media.Heading></Media.Heading>
-                <Col xs={3} xsOffset={0}>
-                <Link onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} to={'/issue/'+this.props.id} style={headingStyle}>{this.props.title}</Link>
-                </Col>
-                <Col xs={3} xsOffset={0}>
-                {this.props.topic}
-                </Col>
-                <Col xs={3} xsOffset={0}>
-                {status}
-                </Col>
-                <Col xs={3} xsOffset={0}>
-                {moment(this.props.date).calendar()}
-                </Col>
-              </Media.Body>
-            </Media>
+                <Media>
+                    <Media.Body>
+                        <Media.Heading></Media.Heading>
+                        <Col xs={3} xsOffset={0}>
+                            <Link onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} to={'/issue/'+this.props.id} style={headingStyle}>{this.props.title}</Link>
+                        </Col>
+                        <Col xs={3} xsOffset={0}>
+                            {this.props.topic}
+                        </Col>
+                        <Col xs={3} xsOffset={0}>
+                            {status}
+                        </Col>
+                        <Col xs={3} xsOffset={0}>
+                            {moment(this.props.date).calendar()}
+                        </Col>
+                    </Media.Body>
+                </Media>
             </div>
-            )
+        )
     }
 }
 
 function mapStateToProps(state, props) {
-    return( {
-
-    } )
+    return({
+    })
 }
 
 var Container = connect(mapStateToProps)(Issue);

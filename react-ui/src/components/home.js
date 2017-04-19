@@ -4,7 +4,7 @@ const actions = require('../actions/index');
 const Issue = require('./issue');
 const { FormGroup, Button, Col, Media, Jumbotron } = require('react-bootstrap');
 
-import CODINGSVG from '../svg/programming.svg';
+import CodingSVG from '../svg/programming.svg';
 import BookmarkSVG from '../svg/bookmark.svg';
 import ListingSVG from '../svg/listing.svg';
 import ThumbsUpSVG from '../svg/thumbs-up.svg';
@@ -17,10 +17,9 @@ class Home extends React.Component {
     }
 
     submitLoginDemoAccount() {
-          this.props.dispatch(actions.loginAction({username:'DemoAccount', password:'123456789'}))
+        this.props.dispatch(actions.loginAction({username:'DemoAccount', password:'123456789'}))
     }
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps, this.props)
         if(this.props.auth.authenticated !== nextProps.auth.authenticated) {
             this.props.dispatch(actions.getIssues())
         }
@@ -32,9 +31,9 @@ class Home extends React.Component {
         event.target.style.backgroundColor = '#0E86CA'
     }
     render() {
-        var issues = this.props.issueData.map((issue) => {
-            return <Issue key={issue.date} id={issue._id} solution={issue.solution} solved={issue.solved} topic={issue.topic} title={issue.title} issue={issue.issue} date={issue.date} helpfulLinks={issue.helpfulLinks}/>
-        })
+        var issues = this.props.issueData.map((issue) =>
+            <Issue key={issue.date} id={issue._id} solution={issue.solution} solved={issue.solved} topic={issue.topic} title={issue.title} issue={issue.issue} date={issue.date} helpfulLinks={issue.helpfulLinks}/>
+        )
         var newIssueStyle={
             paddingTop: '15px',
             paddingBottom: '15px',
@@ -104,49 +103,49 @@ class Home extends React.Component {
         }
         return (
             <div>
-            {(this.props.auth.authenticated) ? (<div>
-            <div style={issueLabelsStyle}>
-            <Media>
-              <Media.Body>
-              <Media.Heading></Media.Heading>
-                <Col xs={3} xsOffset={0}>
-                Issue 
-                </Col>
-                <Col xs={3} xsOffset={0}>
-                Topic
-                </Col>
-                <Col xs={3} xsOffset={0}>
-                Status
-                </Col>
-                <Col xs={3} xsOffset={0}>
-                Posted Date
-                </Col>
-              </Media.Body>
-            </Media>
+                {(this.props.auth.authenticated) ? (<div>
+                <div style={issueLabelsStyle}>
+                    <Media>
+                        <Media.Body>
+                            <Media.Heading></Media.Heading>
+                            <Col xs={3} xsOffset={0}>
+                                Issue 
+                            </Col>
+                            <Col xs={3} xsOffset={0}>
+                                Topic
+                            </Col>
+                            <Col xs={3} xsOffset={0}>
+                                Status
+                            </Col>
+                            <Col xs={3} xsOffset={0}>
+                                Posted Date
+                            </Col>
+                        </Media.Body>
+                    </Media>
+                </div>
+                {issues.reverse()}
+                </div>) : (
+                <div style={newIssueStyle}>
+                <Jumbotron style={jumbotronStyle}>
+                <span style={mainTextStyle}>{'<Code Solutions />'}</span><br/>
+                <span style={textStyle}>Save All Issues You Face While Coding</span><br/>
+                </Jumbotron>
+                <div style={listStyle}>
+                <span style={textStyle}>Add Solutions To All Your Coding Issues</span><br/><img role="presentation" src={CodingSVG} style={svgStyle}/><br/>
+                <span style={textStyle}>Save URL's For All Your Solutions</span><br/><img role="presentation" src={ListingSVG} style={svgStyle}/><br/>
+                <span style={textStyle}>Stop Filling Up Your Bookmarks!</span><br/><img role="presentation" src={BookmarkSVG} style={svgStyle}/><br/>
+                <span style={textStyle}>Sign Up Today And Start Solving!</span><br/><img role="presentation" src={ThumbsUpSVG} style={svgStyle}/><br/>
+                </div>
+                <Jumbotron style={jumbotronStyle}>
+                <FormGroup>
+                  <Col style={demoButtonTextStyle} xs={6} xsOffset={3} sm={6} smOffset={3}>
+                    <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} onClick={this.submitLoginDemoAccount.bind(this)} style={demoButtonStyle}>Demo Account / Login</Button>
+                  </Col>
+                </FormGroup>
+                </Jumbotron>
+                </div>)}
             </div>
-            {issues.reverse()}
-            </div>) : (
-            <div style={newIssueStyle}>
-            <Jumbotron style={jumbotronStyle}>
-            <span style={mainTextStyle}>{'<Code Solutions />'}</span><br/>
-            <span style={textStyle}>Save All Issues You Face While Coding</span><br/>
-            </Jumbotron>
-            <div style={listStyle}>
-            <span style={textStyle}>Add Solutions To All Your Coding Issues</span><br/><img role="presentation" src={CODINGSVG} style={svgStyle}/><br/>
-            <span style={textStyle}>Save URL's For All Your Solutions</span><br/><img role="presentation" src={ListingSVG} style={svgStyle}/><br/>
-            <span style={textStyle}>Stop Filling Up Your Bookmarks!</span><br/><img role="presentation" src={BookmarkSVG} style={svgStyle}/><br/>
-            <span style={textStyle}>Sign Up Today And Start Solving!</span><br/><img role="presentation" src={ThumbsUpSVG} style={svgStyle}/><br/>
-            </div>
-            <Jumbotron style={jumbotronStyle}>
-            <FormGroup>
-              <Col style={demoButtonTextStyle} xs={6} xsOffset={3} sm={6} smOffset={3}>
-                <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} onClick={this.submitLoginDemoAccount.bind(this)} style={demoButtonStyle}>Demo Account / Login</Button>
-              </Col>
-            </FormGroup>
-            </Jumbotron>
-            </div>)}
-            </div>
-            )
+        )
     }
 }
 

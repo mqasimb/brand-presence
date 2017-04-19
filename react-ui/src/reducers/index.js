@@ -21,7 +21,7 @@ var appReducer = function(state = initialState, action) {
     }
 
     if(action.type === actions.SET_SINGLE_ISSUE) {
-        var index = state.issueData.findIndex((issue) => issue._id == action.issueID)
+        let index = state.issueData.findIndex((issue) => issue._id == action.issueID)
         if(index > -1) {
             return {...state, singleIssue: {...state.issueData[index]} }
         }
@@ -32,63 +32,63 @@ var appReducer = function(state = initialState, action) {
     }
 
     if(action.type === actions.EDIT_ISSUE_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
             return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
     }
 
     if(action.type === actions.DELETE_ISSUE_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
             return {...state, issueData: [...state.issueData.slice(0, index), ...state.issueData.slice(index + 1)]}
     	}
     }
 
     if(action.type === actions.ISSUE_SOLVED_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
             return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
     }
 
     if(action.type === actions.ADD_NEW_URL_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
             return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
     }
 
     if(action.type === actions.EDIT_URL_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
     		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
     }
 
     if(action.type === actions.DELETE_URL_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
     		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
     }
 
     if(action.type === actions.ADD_SOLUTION_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
     		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
     }
 
     if(action.type === actions.EDIT_SOLUTION_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
     		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
     }
 
     if(action.type === actions.DELETE_SOLUTION_SUCCESSFUL) {
-    	var index = state.issueData.findIndex((issue) => action.data._id === issue._id)
+    	let index = state.issueData.findIndex((issue) => action.data._id === issue._id)
     	if(index > -1) {
     		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}

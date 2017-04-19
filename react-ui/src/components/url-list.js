@@ -6,12 +6,14 @@ const uuid = require('uuid');
 
 class URLList extends React.Component {
     render(props) {
-        var urls = this.props.list.map((url) => {
-            return <URL key={uuid.v4()} postID={this.props.postID} id={url._id} link={url.url} />;
-        })
+        var urls = this.props.list.map((url) =>
+            <URL key={uuid.v4()} postID={this.props.postID} id={url._id} link={url.url} />
+        )
         return (
             <div>
-            <ListGroup>{urls}</ListGroup>
+                <ListGroup>
+                    {urls}
+                </ListGroup>
             </div>
         )
     }

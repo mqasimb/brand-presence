@@ -58,26 +58,25 @@ class App extends React.Component {
         }
         return (
             <div className="top-nav" style={topStyle}>
-            <div className='nav-bar'>
-            <Navbar style={navBarStyle} className="fixed-top-nav" fixedTop>
-                <Navbar.Header>
-                  <Navbar.Brand>
-                    <Link style={brandStyle} to='/'>{ '<Code Solutions />' }</Link>
-                  </Navbar.Brand>
-                  <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Form pullLeft>
-                </Navbar.Form>
-                <Navbar.Collapse>
-                    {(isLoggedIn) ? (loggedInUser) : (loggedOutUser)}
-                </Navbar.Collapse>
-              </Navbar>
-              </div>
-              <div style={childrenStyle}>
-              {this.props.children}
-              </div>
-        </div>
-            )
+                <div className='nav-bar'>
+                    <Navbar style={navBarStyle} className="fixed-top-nav" fixedTop>
+                        <Navbar.Header>
+                            <Navbar.Brand>
+                                <Link style={brandStyle} to='/'>{ '<Code Solutions />' }</Link>
+                            </Navbar.Brand>
+                            <Navbar.Toggle />
+                        </Navbar.Header>
+                        
+                        <Navbar.Collapse>
+                            {(isLoggedIn) ? (loggedInUser) : (loggedOutUser)}
+                        </Navbar.Collapse>
+                    </Navbar>
+                </div>
+                <div style={childrenStyle}>
+                    {this.props.children}
+                </div>
+            </div>
+        )
     }
 }
 

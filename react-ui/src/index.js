@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-const App = require('./App');
-
 import './index.css';
-
+const App = require('./App');
 const { Provider } = require('react-redux');
 const router = require('react-router');
 const Router = router.Router;

@@ -6,15 +6,14 @@ class Register extends React.Component {
     render(props) {
         return (
             <div>
-            <RegistrationForm/>
+                <RegistrationForm/>
             </div>
-            )
+        )
     }
 }
 
 function mapStateToProps(state, props) {
     return({
-        registerInput: state.app.registerInput
     })
 }
 
