@@ -389,7 +389,7 @@ app.get('/*', function(req, res) {
 })
 
 app.use(function(err, req, res, next) {
-   res.send(err)
+    res.send(err)
 })
 
 var runServer = function(callback) {
