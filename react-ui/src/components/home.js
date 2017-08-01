@@ -4,7 +4,7 @@ const actions = require('../actions/index');
 const Issue = require('./issue');
 const { FormGroup, Button, Col, Media, Jumbotron } = require('react-bootstrap');
 const SearchIssueForm = require('./search-issue-form');
-
+const { reset } = require('redux-form');
 import CodingSVG from '../svg/programming.svg';
 import BookmarkSVG from '../svg/bookmark.svg';
 import ListingSVG from '../svg/listing.svg';
@@ -40,6 +40,11 @@ class Home extends React.Component {
         this.props.dispatch(actions.searchIssues(value.search))
         this.setState({search: true})
     }
+    cancelSearch() {
+        this.props.dispatch(actions.cancelSearch())
+        this.setState({search: false})
+        this.props.dispatch(reset('searchForm'))
+    }
     render() {
         var issues = this.props.issueData.map((issue) =>
             <Issue key={issue.date} id={issue._id} solution={issue.solution} solved={issue.solved} topic={issue.topic} title={issue.title} issue={issue.issue} date={issue.date} helpfulLinks={issue.helpfulLinks}/>
@@ -70,6 +75,13 @@ class Home extends React.Component {
             padding: '20px',
             fontFamily: 'TitilliumSemiBold',
             fontSize: '1.25em'
+        }
+        var searchStyle = {
+            backgroundColor: '#0D355D',
+            color: '#ffffff',
+            maxWidth: '1000px',
+            margin: '0 auto',
+            padding: '20px',
         }
         var svgStyle = {
             height: '100px',
@@ -117,9 +129,8 @@ class Home extends React.Component {
         return (
             <div>
                 {(this.props.auth.authenticated) ? (<div>
-                <SearchIssueForm onSubmit={this.submitSearchIssue.bind(this)} form={'searchForm'}/>
-                <div style={issueLabelsStyle}>  
-                    Show: All Open Solved
+                <div style={searchStyle}>  
+                    <SearchIssueForm showCancel={this.state.search} cancelSearch={this.cancelSearch.bind(this)} onSubmit={this.submitSearchIssue.bind(this)} form={'searchForm'}/>
                 </div> 
                 <div style={issueLabelsStyle}>
                     <Media>

@@ -310,3 +310,10 @@ export function getSearchSuccessful(data) {
         data: data
     })
 }
+
+export const CANCEL_SEARCH = 'CANCEL_SEARCH';
+export function cancelSearch() {
+    return ({
+        type: CANCEL_SEARCH
+    })
+}

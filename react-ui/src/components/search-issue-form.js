@@ -19,7 +19,7 @@ var errorStyle = {
     color: '#ffffff',
 }
 const renderField = ({ input, name, type, controlId, placeholder, meta: { touched, error, warning } }) => (
-    <div>
+    <div style={{height: '34'}}>
         <FormControl style={inputStyle} {...input} name={name} type={type} placeholder={placeholder} />
         <ControlLabel>{touched && ((error && <span style={errorStyle}>{error}</span>) || (warning && <span style={errorStyle}>{warning}</span>))}</ControlLabel>
     </div>
@@ -34,35 +34,21 @@ class SearchIssueForm extends React.Component {
   }
   render() {
       var formStyle = {
-          paddingTop: '30px',
-          paddingBottom: '30px',
-          textAlign: 'center',
-          backgroundColor: '#0D355D',
-          maxWidth: '1000px',
-          margin: '0 auto',
-          paddingLeft: '30px',
-          paddingRight: '30px'
+          backgroundColor: '#0D355D'
       }
       var buttonStyle = {
           backgroundColor: '#0E86CA',
           color: '#ffffff',
           fontFamily: 'TitilliumSemiBold',
-          fontSize: '1.25em',
-          paddingTop: '10px',
-          paddingBottom: '10px',
-          paddingRight: '30px',
-          paddingLeft: '30px',
+          fontSize: '.9em',
+          paddingTop: '5px',
+          paddingBottom: '5px',
+          paddingRight: '10px',
+          paddingLeft: '10px',
           borderRadius: '0',
-          borderColor: '#10A1DE'
-      }
-      var panelStyle = {
-          backgroundColor: '#0D355D',
-          color: '#00AEFF',
-          textAlign: 'center',
-          fontFamily: 'TitilliumSemiBold',
-          fontSize: '1.5em',
-          borderRadius: '0',
-          borderColor: '#0D355D'
+          borderColor: '#10A1DE',
+          height: '34px',
+          marginRight: '10px'
       }
       var textStyle = {
           color: '#00AEFF',
@@ -71,23 +57,20 @@ class SearchIssueForm extends React.Component {
       }
       const { handleSubmit, pristine, submitting } = this.props
       return (
-          <Col xs={12} xsOffset={0} sm={12} smOffset={0} md={12} mdOffset={0} lg={12} lgOffset={0}>
               <div className='search-issue-form'>
                   <Form style={formStyle} horizontal onSubmit={handleSubmit(this.props.onSubmit.bind(this))}>
-                      <FormGroup controlId="formHorizontalNewIssue">
-                          <Col xs={12} sm={6} smOffset={3} md={6} lg={6}>
-                              <Field controlId="formHorizontalNewIssue" name="search" type="text" component={renderField} label="Title" placeholder="Type and issue name..."/>
+                      <FormGroup style={{margin: '0px', verticalAlign: 'middle'}} controlId="formHorizontalSearchIssue">
+                          <Col xs={12} sm={6} md={4} lg={4}>
+                              <Field controlId="formHorizontalNewIssue" name="search" type="text" component={renderField} label="Title" placeholder="Search issue name..."/>
                           </Col>
-                      </FormGroup>
-                      
-                      <FormGroup>
-                          <Col>
+                          <Col xs={12} sm={6} md={6} lg={6}>
                               <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} bsStyle="info" type="submit" disabled={pristine || submitting}>Search Issue</Button>
+                              {(this.props.showCancel) ? (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} bsStyle="info" onClick={this.props.cancelSearch.bind(this)} type="submit" disabled={pristine || submitting}>Cancel</Button>) : (null)}
                           </Col>
                       </FormGroup>
                   </Form>
               </div>
-          </Col>
+
       )
   }
 }

@@ -100,6 +100,10 @@ var appReducer = function(state = initialState, action) {
         return {...state, searchData: [...[], ...action.data]}
     }
 
+    if(action.type === actions.CANCEL_SEARCH) {
+        return {...state, searchData: [...[]]}
+    }
+
     return state;
 }
 
