@@ -66,6 +66,20 @@ app.get('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res
     })
 })
 
+app.get('/api/issue/:search', expressJWT({ secret: config.jwtSecret}), function(req, res) {
+    if(req.params.search.length > 0) {    
+        User.findOne({username: req.user.username}).populate('issues').exec(function(err, user) {
+            if(err) {
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                })
+            }
+            var searchedIssues = user.issues.filter(issue => issue.title.includes(req.params.search));
+            res.json(searchedIssues)
+        })
+    }
+})
+
 app.post('/api/issue', expressJWT({ secret: config.jwtSecret}), function(req, res) {
     Issue.create({title: req.body.title, issue: req.body.issue, topic: req.body.topic, solved: false, date: Date.now(), username: req.user.username, solution: ''}, function(err, issue) {
         if(err) {
