@@ -3,7 +3,8 @@ const actions = require('../actions/index');
 var initialState = {
         auth: {authenticated: false, user: {}},
         issueData: [],
-        singleIssue: {}
+        singleIssue: {},
+        issueFilter: 'All'
     };
 
 var appReducer = function(state = initialState, action) {

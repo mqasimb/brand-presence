@@ -104,6 +104,9 @@ class Home extends React.Component {
         return (
             <div>
                 {(this.props.auth.authenticated) ? (<div>
+                <div style={issueLabelsStyle}>  
+                    Show: All Open Solved
+                </div> 
                 <div style={issueLabelsStyle}>
                     <Media>
                         <Media.Body>
