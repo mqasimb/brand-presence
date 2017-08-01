@@ -3,6 +3,7 @@ const actions = require('../actions/index');
 var initialState = {
         auth: {authenticated: false, user: {}},
         issueData: [],
+        searchData: [],
         singleIssue: {},
         issueFilter: 'All'
     };
@@ -93,6 +94,10 @@ var appReducer = function(state = initialState, action) {
     	if(index > -1) {
     		return {...state, issueData: [...state.issueData.slice(0, index), action.data, ...state.issueData.slice(index + 1)]}
     	}
+    }
+
+    if(action.type === actions.GET_SEARCH_SUCCESSFUL) {
+        return {...state, searchData: [...[], ...action.data]}
     }
 
     return state;

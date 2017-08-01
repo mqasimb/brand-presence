@@ -289,3 +289,24 @@ export function setSingleIssue(issueID) {
         issueID: issueID
     })
 }
+
+export function searchIssues(search) {
+    return function(dispatch) {
+        return axios.get(`/api/issue/${search}`)
+        .then(function(response) {
+            dispatch(getSearchSuccessful(response.data));
+            return response;
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+}
+
+export const GET_SEARCH_SUCCESSFUL = 'GET_SEARCH_SUCCESSFUL';
+export function getSearchSuccessful(data) {
+    return ({
+        type: GET_SEARCH_SUCCESSFUL,
+        data: data
+    })
+}

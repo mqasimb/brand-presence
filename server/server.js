@@ -74,7 +74,7 @@ app.get('/api/issue/:search', expressJWT({ secret: config.jwtSecret}), function(
                     message: 'Internal Server Error'
                 })
             }
-            var searchedIssues = user.issues.filter(issue => issue.title.includes(req.params.search));
+            var searchedIssues = user.issues.filter(issue => issue.title.toLowerCase().includes(req.params.search.toLowerCase()));
             res.json(searchedIssues)
         })
     }

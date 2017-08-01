@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const actions = require('../actions/index');
 const Issue = require('./issue');
 const { FormGroup, Button, Col, Media, Jumbotron } = require('react-bootstrap');
+const SearchIssueForm = require('./search-issue-form');
 
 import CodingSVG from '../svg/programming.svg';
 import BookmarkSVG from '../svg/bookmark.svg';
@@ -10,12 +11,17 @@ import ListingSVG from '../svg/listing.svg';
 import ThumbsUpSVG from '../svg/thumbs-up.svg';
 
 class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: false
+        }
+    }
     componentDidMount() {
         if(this.props.auth.authenticated === true) {
             this.props.dispatch(actions.getIssues())
         }
     }
-
     submitLoginDemoAccount() {
         this.props.dispatch(actions.loginAction({username:'DemoAccount', password:'123456789'}))
     }
@@ -30,8 +36,15 @@ class Home extends React.Component {
     mouseLeave(event) {
         event.target.style.backgroundColor = '#0E86CA'
     }
+    submitSearchIssue(value) {
+        this.props.dispatch(actions.searchIssues(value.search))
+        this.setState({search: true})
+    }
     render() {
         var issues = this.props.issueData.map((issue) =>
+            <Issue key={issue.date} id={issue._id} solution={issue.solution} solved={issue.solved} topic={issue.topic} title={issue.title} issue={issue.issue} date={issue.date} helpfulLinks={issue.helpfulLinks}/>
+        )
+        var searchIssues = this.props.searchData.map((issue) =>
             <Issue key={issue.date} id={issue._id} solution={issue.solution} solved={issue.solved} topic={issue.topic} title={issue.title} issue={issue.issue} date={issue.date} helpfulLinks={issue.helpfulLinks}/>
         )
         var newIssueStyle={
@@ -104,6 +117,7 @@ class Home extends React.Component {
         return (
             <div>
                 {(this.props.auth.authenticated) ? (<div>
+                <SearchIssueForm onSubmit={this.submitSearchIssue.bind(this)} form={'searchForm'}/>
                 <div style={issueLabelsStyle}>  
                     Show: All Open Solved
                 </div> 
@@ -126,18 +140,18 @@ class Home extends React.Component {
                         </Media.Body>
                     </Media>
                 </div>
-                {issues.reverse()}
+                {(searchIssues.length > 0) ? (searchIssues.reverse()) : (issues.reverse())}
                 </div>) : (
                 <div style={newIssueStyle}>
                 <Jumbotron style={jumbotronStyle}>
-                <span style={mainTextStyle}>{'<Code Solutions />'}</span><br/>
-                <span style={textStyle}>Save All Issues You Face While Coding</span><br/>
+                    <span style={mainTextStyle}>{'<Code Solutions />'}</span><br/>
+                    <span style={textStyle}>Save All Issues You Face While Coding</span><br/>
                 </Jumbotron>
                 <div style={listStyle}>
-                <span style={textStyle}>Add Solutions To All Your Coding Issues</span><br/><img role="presentation" src={CodingSVG} style={svgStyle}/><br/>
-                <span style={textStyle}>Save URL's For All Your Solutions</span><br/><img role="presentation" src={ListingSVG} style={svgStyle}/><br/>
-                <span style={textStyle}>Stop Filling Up Your Bookmarks!</span><br/><img role="presentation" src={BookmarkSVG} style={svgStyle}/><br/>
-                <span style={textStyle}>Sign Up Today And Start Solving!</span><br/><img role="presentation" src={ThumbsUpSVG} style={svgStyle}/><br/>
+                    <span style={textStyle}>Add Solutions To All Your Coding Issues</span><br/><img role="presentation" src={CodingSVG} style={svgStyle}/><br/>
+                    <span style={textStyle}>Save URL's For All Your Solutions</span><br/><img role="presentation" src={ListingSVG} style={svgStyle}/><br/>
+                    <span style={textStyle}>Stop Filling Up Your Bookmarks!</span><br/><img role="presentation" src={BookmarkSVG} style={svgStyle}/><br/>
+                    <span style={textStyle}>Sign Up Today And Start Solving!</span><br/><img role="presentation" src={ThumbsUpSVG} style={svgStyle}/><br/>
                 </div>
                 <Jumbotron style={jumbotronStyle}>
                 <FormGroup>
@@ -155,7 +169,8 @@ class Home extends React.Component {
 function mapStateToProps(state, props) {
     return ( {
         auth: state.app.auth,
-        issueData: state.app.issueData
+        issueData: state.app.issueData,
+        searchData: state.app.searchData
     })
 }
 
