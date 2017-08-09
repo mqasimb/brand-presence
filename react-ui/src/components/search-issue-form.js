@@ -65,7 +65,7 @@ class SearchIssueForm extends React.Component {
                           </Col>
                           <Col xs={12} sm={6} md={6} lg={6}>
                               <Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} bsStyle="info" type="submit" disabled={pristine || submitting}>Search Issue</Button>
-                              {(this.props.showCancel) ? (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} bsStyle="info" onClick={this.props.cancelSearch.bind(this)} type="submit" disabled={pristine || submitting}>Cancel</Button>) : (null)}
+                              {(this.props.showCancel) ? (<Button onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} style={buttonStyle} bsStyle="info" onClick={this.props.cancelSearch.bind(this)} type="submit">Cancel</Button>) : (null)}
                           </Col>
                       </FormGroup>
                   </Form>
