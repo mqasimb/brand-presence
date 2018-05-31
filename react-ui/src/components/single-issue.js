@@ -11,6 +11,7 @@ const SolutionForm = require('./solution-form');
 const moment = require('moment');
 
 class Issue extends React.Component {
+    state = {edit: false, addURL: false, solutionEdit: false}
     componentDidMount() {
         if(this.props.auth.authenticated === false) {
             router.hashHistory.push('/login');
@@ -18,10 +19,6 @@ class Issue extends React.Component {
         if(this.props.issueData.length === 0) {
             this.props.dispatch(actions.getIssues())
         }
-    }
-    constructor(props) {
-        super(props);
-        this.state = {edit: false, addURL: false, solutionEdit: false}
     }
     mouseOver(event) {
         event.target.style.backgroundColor = '#00AEFF'

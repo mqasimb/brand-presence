@@ -4,10 +4,9 @@ const URL = require('./url');
 const { ListGroup } = require('react-bootstrap');
 const uuid = require('uuid');
 
-class URLList extends React.Component {
-    render(props) {
-        var urls = this.props.list.map((url) =>
-            <URL key={uuid.v4()} postID={this.props.postID} id={url._id} link={url.url} />
+const URLList = ({postID, list}) => {
+        let urls = list.map((url) =>
+            <URL key={uuid.v4()} postID={postID} id={url._id} link={url.url} />
         )
         return (
             <div>
@@ -16,13 +15,6 @@ class URLList extends React.Component {
                 </ListGroup>
             </div>
         )
-    }
 }
 
-function mapStateToProps(state, props) {
-    return ({
-    })
-}
-var Container = connect(mapStateToProps)(URLList);
-
-module.exports = Container;
+module.exports = URLList;

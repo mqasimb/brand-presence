@@ -5,53 +5,49 @@ const { Button } = require('react-bootstrap');
 const EditURLForm = require('./edit-url-form');
 
 class URL extends React.Component {
-    constructor(props) {
-    	super(props);
-    	this.state = {edit: false};
-    }
-    submitEdit(values) {
+    state = {edit: false};
+    
+    submitEdit = (values) => {
     	this.props.dispatch(actions.editURL(values, this.props.postID, this.props.id))
     }
-    editOn() {
+    editOn = () => {
     	this.setState({edit: true})
     }
-    editOff() {
+    editOff = () => {
     	this.setState({edit: false})
     }
-    deleteURL() {
+    deleteURL = () => {
     	this.props.dispatch(actions.deleteURL(this.props.postID, this.props.id))
    	}
     render(props) {
-        var buttonStyle = {
-            backgroundColor: '#0E86CA',
-            color: '#ffffff',
-            fontSize: '.75em',
-            paddingTop: '5px',
-            paddingBottom: '5px',
-            paddingRight: '10px',
-            paddingLeft: '10px',
-            borderRadius: '0',
-            borderColor: '#10A1DE',
-            marginRight: '20px',
-        }
-        var divStyle = {
-            paddingTop: '5px',
-            paddingBottom: '5px'
-        }
         return (
-            <div style={divStyle}>
-                {(this.state.edit) ? (<EditURLForm cancelEdit={this.editOff.bind(this)} onSubmit={this.submitEdit.bind(this)} form={"EditURLForm-"+this.props.id} initialValues={{url: this.props.link}}/>) : (<div>{this.props.link}<br/><Button style={buttonStyle} onClick={this.editOn.bind(this)}>Edit URL</Button>
-                <Button style={buttonStyle} onClick={this.deleteURL.bind(this)}>Delete URL</Button></div>)}
+            <div style={style.divStyle}>
+                {(this.state.edit) ? (<EditURLForm cancelEdit={this.editOff} onSubmit={this.submitEdit} form={"EditURLForm-"+this.props.id} initialValues={{url: this.props.link}}/>) : (<div>{this.props.link}<br/><Button style={style.buttonStyle} onClick={this.editOn}>Edit URL</Button>
+                <Button style={style.buttonStyle} onClick={this.deleteURL}>Delete URL</Button></div>)}
             </div>
         )
     }
 }
 
-function mapStateToProps(state, props) {
-  return({
-  })
+const style = {
+    buttonStyle: {
+        backgroundColor: '#0E86CA',
+        color: '#ffffff',
+        fontSize: '.75em',
+        paddingTop: '5px',
+        paddingBottom: '5px',
+        paddingRight: '10px',
+        paddingLeft: '10px',
+        borderRadius: '0',
+        borderColor: '#10A1DE',
+        marginRight: '20px',
+    },
+    divStyle: {
+        paddingTop: '5px',
+        paddingBottom: '5px'
+    }
 }
 
-var Container = connect(mapStateToProps)(URL);
+const Container = connect((state, props) => {return {}})(URL);
 
 module.exports = Container;
