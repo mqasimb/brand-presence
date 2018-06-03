@@ -15,7 +15,7 @@ class Issue extends React.Component {
     editIssue = (values) => {
         this.props.dispatch(actions.editIssue(values, this.props.id))
             .then((boolean) => {
-                this.setState({edit: false})
+                this.setState(currentState => ({edit: false}))
             })
     }
     deleteIssue = (values) => {
@@ -25,11 +25,11 @@ class Issue extends React.Component {
         this.props.dispatch(actions.markIssueSolved(this.props.solved, this.props.id))
     }
     solutionEdit = (toggle) => {
-        this.setState({solutionEdit: toggle})
+        this.setState(currentState => ({solutionEdit: toggle}))
     }
     submitSolutionEdit = (values) => {
         this.props.dispatch(actions.editSolution(values, this.props.id))
-        this.setState({solutionEdit: false})
+        this.setState(currentState => ({solutionEdit: false}))
     }
     deleteSolution = () => {
         this.props.dispatch(actions.deleteSolution(this.props.id))
@@ -38,17 +38,17 @@ class Issue extends React.Component {
         this.props.dispatch(actions.addSolution(values, this.props.id))
     }
     addURLToggle = (toggle) => {
-        this.setState({addURL: toggle})
+        this.setState(currentState => ({addURL: toggle}))
     }
     addHelpfulURL = (values) => {
         this.props.dispatch(actions.addNewURL(values, this.props.id))
         this.props.dispatch(reset("AddURLForm-"+this.props.id))
     }
     enableEdit = () => {
-        this.setState({edit: true});
+        this.setState(currentState => ({edit: true}))
     }
     cancelEdit = () => {
-        this.setState({edit: false});
+        this.setState(currentState => ({edit: false}))
     }
     render() {
         var newIssueStyle={

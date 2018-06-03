@@ -5,14 +5,14 @@ const actions = require('../actions/index');
 const LoginForm = require('./login-form');
 
 class Login extends React.Component {
-    submitLogin(values) {
+    submitLogin = (values) => {
         this.props.dispatch(actions.loginAction(values)).then(function(bool) {
             if(bool) {
                 router.hashHistory.push('/');
             }
         });
     }
-    submitLoginDemoAccount() {
+    submitLoginDemoAccount = () => {
         this.props.dispatch(actions.loginAction({username:'DemoAccount', password:'123456789'})).then(function(bool) {
             if(bool) {
                 //If user logs in succesfully redirect to the home page
@@ -24,7 +24,7 @@ class Login extends React.Component {
     render(props) {
         return (
             <div>
-                <LoginForm demoButtonAction={this.submitLoginDemoAccount.bind(this)} onSubmit={this.submitLogin}/>
+                <LoginForm demoButtonAction={this.submitLoginDemoAccount} onSubmit={this.submitLogin}/>
             </div>
         )
     }

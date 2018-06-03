@@ -6,7 +6,7 @@ const NewIssueForm = require('./new-issue-form');
 const { reset } = require('redux-form');
 
 class NewIssue extends React.Component {
-    submitIssue(values) {
+    submitIssue = (values) => {
         this.props.dispatch(actions.addNewIssue(values))
             .then((boolean) => {
                 this.props.dispatch(reset("NewIssueForm"))
@@ -19,16 +19,13 @@ class NewIssue extends React.Component {
         }
         return(
             <div style={newIssueStyle}>
-                <NewIssueForm form='NewIssueForm' onSubmit={this.submitIssue.bind(this)}/>
+                <NewIssueForm form='NewIssueForm' onSubmit={this.submitIssue}/>
             </div>
         )
     }
 }
 
-function mapStateToProps(state, props) {
-    return( {
-    } )
-}
+const mapStateToProps = (state, props) => {return {}}
 
 var Container = connect(mapStateToProps)(NewIssue);
 

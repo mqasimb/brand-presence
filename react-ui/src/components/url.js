@@ -11,10 +11,10 @@ class URL extends React.Component {
     	this.props.dispatch(actions.editURL(values, this.props.postID, this.props.id))
     }
     editOn = () => {
-    	this.setState({edit: true})
+    	this.setState(currentState => ({edit: true}))
     }
     editOff = () => {
-    	this.setState({edit: false})
+    	this.setState(currentState => ({edit: false}))
     }
     deleteURL = () => {
     	this.props.dispatch(actions.deleteURL(this.props.postID, this.props.id))

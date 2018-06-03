@@ -11,11 +11,8 @@ import ListingSVG from '../svg/listing.svg';
 import ThumbsUpSVG from '../svg/thumbs-up.svg';
 
 class Home extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            search: false
-        }
+    state = {
+        search: false
     }
     componentDidMount() {
         if(this.props.auth.authenticated === true) {

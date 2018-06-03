@@ -7,14 +7,12 @@ const { reset } = require('redux-form');
 const moment = require('moment');
 
 class Issue extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {edit: false, addURL: false, solutionEdit: false}
-    }
+    state = {edit: false, addURL: false, solutionEdit: false}
+
     editIssue(values) {
         this.props.dispatch(actions.editIssue(values, this.props.id))
             .then((boolean) => {
-                this.setState({edit: false})
+                this.setState(currentState => ({edit: false}))
             })
     }
     deleteIssue(values) {
@@ -24,11 +22,11 @@ class Issue extends React.Component {
         this.props.dispatch(actions.markIssueSolved(this.props.solved, this.props.id))
     }
     solutionEdit(toggle) {
-        this.setState({solutionEdit: toggle})
+        this.setState(currentState => ({solutionEdit: toggle}))
     }
     submitSolutionEdit(values) {
         this.props.dispatch(actions.editSolution(values, this.props.id))
-        this.setState({solutionEdit: false})
+        this.setState(currentState => ({solutionEdit: false}))
     }
     deleteSolution() {
         this.props.dispatch(actions.deleteSolution(this.props.id))
@@ -37,17 +35,17 @@ class Issue extends React.Component {
         this.props.dispatch(actions.addSolution(values, this.props.id))
     }
     addURLToggle(toggle) {
-        this.setState({addURL: toggle})
+        this.setState(currentState => ({addURL: toggle}))
     }
     addHelpfulURL(values) {
         this.props.dispatch(actions.addNewURL(values, this.props.id))
         this.props.dispatch(reset("AddURLForm-"+this.props.id))
     }
     enableEdit() {
-        this.setState({edit: true});
+        this.setState(currentState => ({edit: true}))
     }
     cancelEdit() {
-        this.setState({edit: false});
+        this.setState(currentState => ({edit: false}))
     }
     mouseOver(event) {
         event.target.style.color = '#00AEFF'

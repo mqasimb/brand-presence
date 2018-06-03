@@ -10,47 +10,45 @@ const URLList = require('./url-list');
 const SolutionForm = require('./solution-form');
 
 class Issue extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {edit: false, addURL: false, solutionEdit: false}
-    }
-    editIssue(values) {
+    state = {edit: false, addURL: false, solutionEdit: false}
+
+    editIssue = (values) => {
         this.props.dispatch(actions.editIssue(values, this.props.id))
             .then((boolean) => {
-                this.setState({edit: false})
+                this.setState(currentState => ({edit: false}))
             })
     }
-    deleteIssue(values) {
+    deleteIssue = (values) => {
         this.props.dispatch(actions.deleteIssue(this.props.id))
     }
-    markAsSolved() {
+    markAsSolved = () {
         this.props.dispatch(actions.markIssueSolved(this.props.solved, this.props.id))
     }
-    solutionEdit(toggle) {
-        this.setState({solutionEdit: toggle})
+    solutionEdit = (toggle) => {
+        this.setState(currentState => ({solutionEdit: toggle}))
     }
-    submitSolutionEdit(values) {
+    submitSolutionEdit = (values) => {
         this.props.dispatch(actions.editSolution(values, this.props.id))
-        this.setState({solutionEdit: false})
+        this.setState(currentState => ({solutionEdit: false}))
     }
-    deleteSolution() {
+    deleteSolution = () => {
         this.props.dispatch(actions.deleteSolution(this.props.id))
     }
-    submitSolution(values) {
+    submitSolution = (values) => {
         this.props.dispatch(actions.addSolution(values, this.props.id))
     }
-    addURLToggle(toggle) {
-        this.setState({addURL: toggle})
+    addURLToggle = (toggle) => {
+        this.setState(currentState => ({addURL: toggle}))
     }
-    addHelpfulURL(values) {
+    addHelpfulURL = (values) => {
         this.props.dispatch(actions.addNewURL(values, this.props.id))
         this.props.dispatch(reset("AddURLForm-"+this.props.id))
     }
-    enableEdit() {
-        this.setState({edit: true});
+    enableEdit = () => {
+        this.setState(currentState => ({edit: true}))
     }
-    cancelEdit() {
-        this.setState({edit: false});
+    cancelEdit = () => {
+        this.setState(currentState => ({edit: false}))
     }
     render() {
         var newIssueStyle={
@@ -82,7 +80,7 @@ class Issue extends React.Component {
         }
         return (
             <div style={newIssueStyle}>
-                {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+this.props.id} onSubmit={this.editIssue.bind(this)} cancelEdit={this.cancelEdit.bind(this)} initialValues={{topic: this.props.topic, title: this.props.title, issue: this.props.issue}}/>) : (<div><Button style={buttonStyle} onClick={this.enableEdit.bind(this)}>Edit</Button><Button style={buttonStyle} onClick={this.deleteIssue.bind(this)}>Delete</Button>
+                {(this.state.edit) ? (<EditIssueForm form={"EditIssueForm-"+this.props.id} onSubmit={this.editIssue} cancelEdit={this.cancelEdit} initialValues={{topic: this.props.topic, title: this.props.title, issue: this.props.issue}}/>) : (<div><Button style={buttonStyle} onClick={this.enableEdit}>Edit</Button><Button style={buttonStyle} onClick={this.deleteIssue}>Delete</Button>
                 <Media>
                     <Media.Body>
                         <Media.Heading style={headingStyle}>{this.props.title}{this.props.date}</Media.Heading>
@@ -92,22 +90,17 @@ class Issue extends React.Component {
                         </Media.Left>
                     </Media.Body>
                 </Media>
-                <div className="issue-solution">{(!this.props.solution || (this.props.solution === '')) ? (<SolutionForm form={"SolutionForm-"+this.props.id} onSubmit={this.submitSolution.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />) : (this.props.solution)}</div>
-                {(this.props.solution && this.state.solutionEdit) ? (<SolutionForm form={"SolutionEditForm-"+this.props.id} initialValues={{solution: this.props.solution}} onSubmit={this.submitSolutionEdit.bind(this)} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={true} />) : (<Button onClick={this.solutionEdit.bind(this, true)}>Edit Your Solution</Button>)}
-                {(this.props.solved) ? (<Button style={buttonStyle} onClick={this.markAsSolved.bind(this)}>Solved</Button>) : (<Button style={buttonStyle} onClick={this.markAsSolved.bind(this)}>Mark Issue As Solved</Button>)}
+                <div className="issue-solution">{(!this.props.solution || (this.props.solution === '')) ? (<SolutionForm form={"SolutionForm-"+this.props.id} onSubmit={this.submitSolution} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={false} />) : (this.props.solution)}</div>
+                {(this.props.solution && this.state.solutionEdit) ? (<SolutionForm form={"SolutionEditForm-"+this.props.id} initialValues={{solution: this.props.solution}} onSubmit={this.submitSolutionEdit} cancelEdit={this.solutionEdit.bind(this, false)} isEdit={true} />) : (<Button onClick={this.solutionEdit.bind(this, true)}>Edit Your Solution</Button>)}
+                {(this.props.solved) ? (<Button style={buttonStyle} onClick={this.markAsSolved}>Solved</Button>) : (<Button style={buttonStyle} onClick={this.markAsSolved}>Mark Issue As Solved</Button>)}
                 {(this.state.addURL) ? (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, false)}>Hide</Button>) : (<Button style={buttonStyle} onClick={this.addURLToggle.bind(this, true)}>Show</Button>)}
-                {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.id} onSubmit={this.addHelpfulURL.bind(this)}/>) : (null)}
+                {(this.state.addURL) ? (<AddURLForm form={"AddURLForm-"+this.props.id} onSubmit={this.addHelpfulURL}/>) : (null)}
                 <URLList postID={this.props.id} list={this.props.helpfulLinks}/></div>)}
             </div>
         )
     }
 }
 
-function mapStateToProps(state, props) {
-    return({
-    })
-}
-
-var Container = connect(mapStateToProps)(Issue);
+var Container = connect((state, props) => {return {}})(Issue);
 
 module.exports = Container;
